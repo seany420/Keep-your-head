@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#14101C">
+<title>KEEP YOUR HEAD — a field manual for the panicking brain</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14101C;        /* deep plum-black */
+  --ink2:#1E1830;       /* panel */
+  --ink3:#2A2240;       /* raised */
+  --bone:#EDE4D0;       /* parchment text */
+  --bone-dim:#B9AE97;
+  --brass:#C9A45C;      /* monocle brass */
+  --brass-dim:#8A7340;
+  --oxblood:#8A3033;    /* panic / alert */
+  --oxblood-bright:#B4494D;
+  --fog:#8FA3B0;        /* calm / breath */
+  --fog-dim:#5E7280;
+  --good:#7FA36B;
+  --radius:14px;
+  --display:'IM Fell English', Georgia, serif;
+  --displaysc:'IM Fell English SC', Georgia, serif;
+  --body:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --mono:'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);
+  background-image:radial-gradient(ellipse at 50% -10%, #241C3A 0%, var(--ink) 55%);
+  color:var(--bone);
+  font-family:var(--body);
+  min-height:100vh;
+  padding-bottom:90px;
+  line-height:1.55;
+}
+/* ---------- masthead ---------- */
+header{
+  text-align:center;
+  padding:26px 16px 10px;
+  border-bottom:1px solid var(--brass-dim);
+  position:relative;
+}
+header .mascot{width:74px;height:74px;margin:0 auto 6px;display:block}
+h1{
+  font-family:var(--displaysc);
+  font-weight:400;
+  font-size:clamp(30px, 8vw, 44px);
+  letter-spacing:.06em;
+  color:var(--bone);
+  text-shadow:0 0 26px rgba(201,164,92,.25);
+}
+.tagline{
+  font-family:var(--display);
+  font-style:italic;
+  color:var(--brass);
+  font-size:15px;
+  margin-top:2px;
+}
+/* ---------- tabs ---------- */
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  display:flex;justify-content:space-around;
+  background:rgba(20,16,28,.96);
+  backdrop-filter:blur(10px);
+  border-top:1px solid var(--brass-dim);
+  padding:6px 2px calc(8px + env(safe-area-inset-bottom));
+}
+nav button{
+  background:none;border:none;color:var(--bone-dim);
+  font-family:var(--body);font-size:10.5px;letter-spacing:.04em;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  cursor:pointer;padding:4px 6px;border-radius:8px;min-width:44px;
+}
+nav button .ico{font-size:19px;line-height:1;filter:grayscale(.6);opacity:.75}
+nav button.active{color:var(--brass)}
+nav button.active .ico{filter:none;opacity:1}
+nav button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+main{max-width:680px;margin:0 auto;padding:18px 16px}
+section.panel{display:none;animation:fadein .35s ease}
+section.panel.active{display:block}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2{
+  font-family:var(--displaysc);font-weight:400;
+  font-size:26px;letter-spacing:.05em;color:var(--brass);
+  margin:6px 0 4px;
+}
+.sub{color:var(--bone-dim);font-size:14px;margin-bottom:16px;font-family:var(--display);font-style:italic}
+/* ---------- cards & buttons ---------- */
+.card{
+  background:var(--ink2);
+  border:1px solid rgba(201,164,92,.22);
+  border-radius:var(--radius);
+  padding:16px;margin-bottom:14px;
+}
+.card h3{font-family:var(--display);font-weight:400;font-size:19px;color:var(--bone);letter-spacing:.02em}
+.card .meta{font-size:12px;color:var(--fog);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.btn{
+  display:inline-block;border:none;cursor:pointer;
+  font-family:var(--body);font-weight:600;font-size:15px;
+  padding:12px 20px;border-radius:10px;
+  background:var(--brass);color:#1a1408;
+  transition:transform .1s ease, filter .15s;
+}
+.btn:active{transform:scale(.97)}
+.btn:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
+.btn.ghost{background:transparent;color:var(--brass);border:1px solid var(--brass-dim)}
+.btn.calm{background:var(--fog);color:#101820}
+.btn.danger{background:var(--oxblood);color:var(--bone)}
+.btn.small{padding:8px 14px;font-size:13px}
+.btn.block{display:block;width:100%;text-align:center;margin-top:10px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+/* ---------- SOS ---------- */
+.sos-big{
+  display:block;width:100%;padding:26px;margin-bottom:12px;
+  border-radius:var(--radius);border:1px solid var(--oxblood-bright);
+  background:linear-gradient(160deg, #3A1518, #241016);
+  color:var(--bone);cursor:pointer;text-align:left;
+}
+.sos-big .t{font-family:var(--displaysc);font-size:24px;letter-spacing:.05em;color:var(--oxblood-bright)}
+.sos-big .d{font-size:14px;color:var(--bone-dim);margin-top:4px}
+.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick{
+  background:var(--ink2);border:1px solid rgba(201,164,92,.22);border-radius:var(--radius);
+  padding:16px 14px;color:var(--bone);cursor:pointer;text-align:left;
+}
+.quick .qt{font-family:var(--display);font-size:17px}
+.quick .qd{font-size:12px;color:var(--bone-dim);margin-top:3px}
+/* ---------- breathe / monocle ---------- */
+.monocle-stage{
+  position:relative;height:340px;display:flex;align-items:center;justify-content:center;
+  margin:8px 0 4px;
+}
+.monocle{
+  position:relative;width:120px;height:120px;border-radius:50%;
+  border:6px solid var(--brass);
+  background:radial-gradient(circle at 35% 30%, rgba(143,163,176,.55), rgba(143,163,176,.12) 60%, rgba(20,16,28,.2));
+  box-shadow:0 0 40px rgba(143,163,176,.25), inset 0 0 30px rgba(143,163,176,.15);
+  transition:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.monocle::after{ /* chain */
+  content:'';position:absolute;top:96%;left:78%;
+  width:2px;height:70px;
+  background:repeating-linear-gradient(to bottom, var(--brass) 0 4px, transparent 4px 7px);
+  transform:rotate(14deg);transform-origin:top;
+}
+.breath-word{
+  font-family:var(--displaysc);font-size:20px;color:var(--bone);
+  letter-spacing:.1em;text-shadow:0 0 14px rgba(0,0,0,.7);
+}
+.breath-count{
+  position:absolute;bottom:8px;left:0;right:0;text-align:center;
+  font-family:var(--mono);font-size:13px;color:var(--fog);
+}
+.slider-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.slider-row label{flex:0 0 118px;font-size:13px;color:var(--bone-dim)}
+.slider-row input[type=range]{flex:1;accent-color:var(--brass)}
+.slider-row .val{flex:0 0 34px;text-align:right;font-family:var(--mono);font-size:13px;color:var(--brass)}
+.preset-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.chip{
+  border:1px solid var(--brass-dim);background:transparent;color:var(--bone-dim);
+  border-radius:999px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:var(--body);
+}
+.chip.on{background:var(--brass);color:#1a1408;border-color:var(--brass);font-weight:600}
+/* ---------- guided exercise player ---------- */
+.player{
+  background:var(--ink2);border:1px solid rgba(143,163,176,.35);
+  border-radius:var(--radius);padding:22px 18px;min-height:220px;
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.player .script{
+  font-family:var(--display);font-size:20px;line-height:1.6;color:var(--bone);
+  flex:1;display:flex;align-items:center;
+  animation:fadein .6s ease;
+}
+.player .prog{height:3px;background:var(--ink3);border-radius:2px;margin:14px 0 10px;overflow:hidden}
+.player .prog i{display:block;height:100%;background:var(--fog);width:0%;transition:width .3s linear}
+.player .ctr{display:flex;justify-content:space-between;align-items:center}
+.stepnum{font-family:var(--mono);font-size:12px;color:var(--fog)}
+/* ---------- accordions (skills) ---------- */
+details{
+  background:var(--ink2);border:1px solid rgba(201,164,92,.22);
+  border-radius:var(--radius);margin-bottom:10px;overflow:hidden;
+}
+summary{
+  cursor:pointer;padding:14px 16px;list-style:none;
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+}
+summary::-webkit-details-marker{display:none}
+summary .st{font-family:var(--display);font-size:17px}
+summary .cat{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog);flex-shrink:0}
+details[open] summary{border-bottom:1px solid rgba(201,164,92,.15)}
+details .body{padding:12px 16px 16px;font-size:14.5px;color:var(--bone)}
+details .body ol, details .body ul{padding-left:20px;margin:6px 0}
+details .body li{margin:5px 0}
+details .body .whisper{font-family:var(--display);font-style:italic;color:var(--brass);margin-top:10px;font-size:14px}
+/* ---------- tracking ---------- */
+textarea, input[type=text], input[type=number], select{
+  width:100%;background:var(--ink3);border:1px solid var(--brass-dim);
+  border-radius:10px;color:var(--bone);padding:11px 12px;
+  font-family:var(--body);font-size:15px;margin:6px 0 12px;
+}
+textarea{min-height:74px;resize:vertical}
+label.f{font-size:13px;color:var(--fog);text-transform:uppercase;letter-spacing:.1em}
+.emochips{display:flex;flex-wrap:wrap;gap:7px;margin:6px 0 12px}
+.rate{margin:4px 0 10px}
+.rate .rl{display:flex;justify-content:space-between;font-size:13px;color:var(--bone-dim)}
+.rate .rl b{color:var(--brass);font-family:var(--mono);font-size:15px}
+.rate input[type=range]{width:100%;accent-color:var(--oxblood-bright)}
+.entry{
+  background:var(--ink2);border:1px solid rgba(201,164,92,.18);border-radius:var(--radius);
+  padding:13px 14px;margin-bottom:10px;font-size:14px;
+}
+.entry .when{font-family:var(--mono);font-size:11.5px;color:var(--fog)}
+.entry .nums{font-family:var(--mono);font-size:12.5px;margin-top:5px;color:var(--bone-dim)}
+.entry .delta-good{color:var(--good)}
+.entry .delta-bad{color:var(--oxblood-bright)}
+.entry .sit{margin-top:5px}
+canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgba(201,164,92,.2);border-radius:var(--radius)}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.stat{background:var(--ink2);border:1px solid rgba(201,164,92,.2);border-radius:var(--radius);padding:12px;text-align:center}
+.stat .n{font-family:var(--displaysc);font-size:26px;color:var(--brass)}
+.stat .l{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--bone-dim)}
+/* ---------- perspective ---------- */
+.quote-card{
+  background:linear-gradient(165deg, var(--ink3), var(--ink2));
+  border:1px solid var(--brass-dim);border-radius:var(--radius);
+  padding:30px 22px;text-align:center;min-height:230px;
+  display:flex;flex-direction:column;justify-content:center;gap:12px;
+  animation:fadein .5s ease;
+}
+.quote-card .q{font-family:var(--display);font-size:21px;line-height:1.5;color:var(--bone)}
+.quote-card .a{font-family:var(--displaysc);font-size:14px;color:var(--brass);letter-spacing:.08em}
+.quote-card .rf{font-size:13.5px;color:var(--fog);font-style:italic;border-top:1px solid rgba(201,164,92,.2);padding-top:12px}
+/* ---------- SOS overlay ---------- */
+#sosOverlay{
+  position:fixed;inset:0;background:rgba(14,10,20,.985);z-index:100;
+  display:none;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;text-align:center;
+}
+#sosOverlay.open{display:flex}
+#sosOverlay .big{font-family:var(--displaysc);font-size:26px;color:var(--brass);letter-spacing:.06em;margin-bottom:8px}
+#sosOverlay .txt{font-family:var(--display);font-size:19px;max-width:480px;color:var(--bone);min-height:88px}
+.toast{
+  position:fixed;left:50%;bottom:100px;transform:translateX(-50%);
+  background:var(--brass);color:#1a1408;font-weight:600;font-size:14px;
+  padding:10px 18px;border-radius:999px;z-index:200;opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.toast.show{opacity:1}
+.crisis{font-size:12px;color:var(--bone-dim);text-align:center;margin-top:20px;line-height:1.6}
+.crisis b{color:var(--oxblood-bright)}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}
+@media(max-width:420px){ .quick-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Sir Cortex: brain with monocle -->
+  <svg class="mascot" viewBox="0 0 100 100" aria-label="A brain wearing a monocle">
+    <g>
+      <!-- brain body -->
+      <path d="M50 14 C30 14 18 26 18 42 C13 45 12 54 17 58 C15 68 24 78 36 76 C40 84 60 84 64 76 C76 78 85 68 83 58 C88 54 87 45 82 42 C82 26 70 14 50 14 Z"
+            fill="#C7A7D6" stroke="#7A5E8C" stroke-width="2.5"/>
+      <!-- central fissure -->
+      <path d="M50 15 C48 35 52 55 50 79" fill="none" stroke="#7A5E8C" stroke-width="2.2"/>
+      <!-- gyri left -->
+      <path d="M25 34 q8 -6 14 0 M22 48 q9 -7 16 -1 M27 62 q8 -6 15 0 M36 26 q6 -5 11 0" fill="none" stroke="#7A5E8C" stroke-width="2" stroke-linecap="round"/>
+      <!-- gyri right -->
+      <path d="M61 26 q6 -5 11 1 M63 40 q8 -6 14 1 M62 56 q8 -5 14 1 M58 68 q7 -5 13 0" fill="none" stroke="#7A5E8C" stroke-width="2" stroke-linecap="round"/>
+      <!-- monocle -->
+      <circle cx="66" cy="47" r="13" fill="rgba(143,163,176,.28)" stroke="#C9A45C" stroke-width="3.4"/>
+      <circle cx="62" cy="43" r="3.4" fill="rgba(237,228,208,.5)"/>
+      <!-- chain -->
+      <path d="M66 60 q6 12 -2 24 q-4 7 4 10" fill="none" stroke="#C9A45C" stroke-width="2" stroke-dasharray="3 3"/>
+    </g>
+  </svg>
+  <h1>KEEP YOUR HEAD</h1>
+  <div class="tagline">a field manual for the panicking brain</div>
+</header>
+
+<main>
+
+<!-- ============ SOS ============ -->
+<section class="panel active" id="p-sos">
+  <h2>Right Now</h2>
+  <div class="sub">The monster is cortisol. It has a run time. Pick a door.</div>
+
+  <button class="sos-big" onclick="startSOS()">
+    <div class="t">☠ PANIC PROTOCOL</div>
+    <div class="d">Full guided sequence: 90 seconds of breath → grounding → re-check. For when thinking is not currently available.</div>
+  </button>
+
+  <div class="quick-grid">
+    <button class="quick" onclick="go('p-breathe')"><div class="qt">Breathe</div><div class="qd">The monocle expands. So do your lungs.</div></button>
+    <button class="quick" onclick="go('p-ground')"><div class="qt">Ground</div><div class="qd">5-4-3-2-1, pelvic floor, PMR, cold water.</div></button>
+    <button class="quick" onclick="go('p-defuse')"><div class="qt">Defuse</div><div class="qd">Leaves on a stream & friends.</div></button>
+    <button class="quick" onclick="go('p-track')"><div class="qt">Log It</div><div class="qd">Rate the dread. Track the drop.</div></button>
+  </div>
+
+  <div class="crisis">
+    This is a coping tool, not a crisis line and not treatment.<br>
+    If you're in danger of harming yourself: <b>call or text 988</b> (US) or your local emergency number.
+  </div>
+</section>
+
+<!-- ============ BREATHE ============ -->
+<section class="panel" id="p-breathe">
+  <h2>Breathe</h2>
+  <div class="sub">Slow exhale = vagal brake. Physiology doesn't argue; it just complies.</div>
+
+  <div class="preset-row" id="presetRow"></div>
+
+  <div class="monocle-stage">
+    <div class="monocle" id="monocle"><span class="breath-word" id="breathWord">ready</span></div>
+    <div class="breath-count" id="breathCount"></div>
+  </div>
+
+  <div class="row" style="justify-content:center;margin-bottom:14px">
+    <button class="btn calm" id="breathBtn" onclick="toggleBreath()">Begin</button>
+  </div>
+
+  <div class="card">
+    <h3>Adjust the timing</h3>
+    <div class="slider-row"><label for="sIn">Inhale</label><input type="range" id="sIn" min="2" max="10" step="0.5" value="4"><span class="val" id="vIn">4s</span></div>
+    <div class="slider-row"><label for="sH1">Hold (top)</label><input type="range" id="sH1" min="0" max="10" step="0.5" value="4"><span class="val" id="vH1">4s</span></div>
+    <div class="slider-row"><label for="sOut">Exhale</label><input type="range" id="sOut" min="2" max="12" step="0.5" value="4"><span class="val" id="vOut">4s</span></div>
+    <div class="slider-row"><label for="sH2">Hold (bottom)</label><input type="range" id="sH2" min="0" max="10" step="0.5" value="4"><span class="val" id="vH2">4s</span></div>
+    <div class="slider-row"><label for="sCyc">Cycles</label><input type="range" id="sCyc" min="3" max="30" step="1" value="10"><span class="val" id="vCyc">10</span></div>
+  </div>
+</section>
+
+<!-- ============ GROUND ============ -->
+<section class="panel" id="p-ground">
+  <h2>Ground</h2>
+  <div class="sub">The body is the exit. Panic lives in the future; your feet do not.</div>
+
+  <div class="card">
+    <div class="meta">Sensory anchor</div>
+    <h3>5-4-3-2-1 Grounding</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Name your way back into the room. Type or just tap the counter as you spot each one.</p>
+    <div id="g54321"></div>
+    <div class="row">
+      <button class="btn small" onclick="start54321()">Start</button>
+      <button class="btn small ghost" onclick="reset54321()">Reset</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="meta">Somatic release · guided</div>
+    <h3>Pelvic Floor Drop</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">The pelvic floor braces under threat and nobody notices. ~4 minutes, narrated.</p>
+    <button class="btn small calm" onclick="startPlayer('pelvic')">Begin</button>
+  </div>
+
+  <div class="card">
+    <div class="meta">Somatic release · guided</div>
+    <h3>Rapid PMR (Progressive Muscle Relaxation)</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Tense, hold, release — big muscle groups, top to bottom. ~3 minutes.</p>
+    <button class="btn small calm" onclick="startPlayer('pmr')">Begin</button>
+  </div>
+
+  <div class="card">
+    <div class="meta">Fast physiology</div>
+    <h3>Cold Anchor (TIP)</h3>
+    <p style="font-size:14px;margin:6px 0">Cold water on the face or wrists, or an ice cube in the hand, triggers the dive reflex and slows heart rate within ~30 seconds. Hold 15–30s while breathing out slowly. <span style="color:var(--bone-dim)">(Check with your doctor first if you have a heart condition.)</span></p>
+  </div>
+
+  <div id="playerHost"></div>
+</section>
+
+<!-- ============ DEFUSE ============ -->
+<section class="panel" id="p-defuse">
+  <h2>Defuse</h2>
+  <div class="sub">You are not your thoughts. You're the theater they're screening in.</div>
+
+  <div class="card">
+    <div class="meta">ACT classic · guided ~6 min</div>
+    <h3>Leaves on a Stream</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Narrated visualization. Each thought gets a leaf. The stream does the rest.</p>
+    <button class="btn small calm" onclick="startPlayer('leaves')">Begin</button>
+  </div>
+
+  <div class="card">
+    <div class="meta">ACT · guided ~4 min</div>
+    <h3>Passengers on the Bus</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Your anxious thoughts are loud passengers. You're still the one driving.</p>
+    <button class="btn small calm" onclick="startPlayer('bus')">Begin</button>
+  </div>
+
+  <div class="card">
+    <div class="meta">Quick defusion moves</div>
+    <h3>Fast Untangles</h3>
+    <ul style="font-size:14.5px;padding-left:18px;margin-top:8px">
+      <li style="margin:6px 0"><b>Label it:</b> "I'm having the thought that ___." Then: "I notice I'm having the thought that ___." Watch the distance open up.</li>
+      <li style="margin:6px 0"><b>Thank your mind:</b> "Thanks, brain. Very creative. Filed under fiction."</li>
+      <li style="margin:6px 0"><b>Silly voice:</b> Repeat the scary thought in a cartoon villain voice. Dread rarely survives a bad accent.</li>
+      <li style="margin:6px 0"><b>Name the channel:</b> "Ah — Radio Doom & Gloom, broadcasting again. Same three hits."</li>
+      <li style="margin:6px 0"><b>The word drill:</b> Say the scariest word in the thought out loud 30 times fast until it dissolves into noise.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section class="panel" id="p-skills">
+  <h2>Skills</h2>
+  <div class="sub">Distress tolerance and emotion regulation — the DBT toolkit, minus the binder.</div>
+  <div id="skillsHost"></div>
+</section>
+
+<!-- ============ TRACK ============ -->
+<section class="panel" id="p-track">
+  <h2>Track</h2>
+  <div class="sub">Measurement-based care for an audience of one.</div>
+
+  <div class="card" id="newEntryCard">
+    <h3 id="entryTitle">New check-in</h3>
+    <div id="recheckBanner" style="display:none;font-size:13px;color:var(--fog);margin:4px 0 8px"></div>
+
+    <label class="f">What's going on?</label>
+    <textarea id="fSituation" placeholder="Where are you, what's happening, what triggered it..."></textarea>
+
+    <label class="f">Thoughts</label>
+    <textarea id="fThoughts" placeholder="What is the brain broadcasting..."></textarea>
+
+    <label class="f">Emotions</label>
+    <div class="emochips" id="emoChips"></div>
+
+    <label class="f">Ratings (0–10)</label>
+    <div class="rate"><div class="rl"><span>Anxiety</span><b id="rAnxV">5</b></div><input type="range" id="rAnx" min="0" max="10" value="5"></div>
+    <div class="rate"><div class="rl"><span>Panic</span><b id="rPanV">0</b></div><input type="range" id="rPan" min="0" max="10" value="0"></div>
+    <div class="rate"><div class="rl"><span>Depression</span><b id="rDepV">0</b></div><input type="range" id="rDep" min="0" max="10" value="0"></div>
+    <div class="rate"><div class="rl"><span>Stress</span><b id="rStrV">5</b></div><input type="range" id="rStr" min="0" max="10" value="5"></div>
+
+    <div id="skillUsedWrap" style="display:none">
+      <label class="f">Skill used</label>
+      <select id="fSkillUsed">
+        <option>Breathing</option><option>5-4-3-2-1</option><option>Pelvic floor drop</option>
+        <option>PMR</option><option>Cold anchor</option><option>Leaves on a stream</option>
+        <option>Passengers on the bus</option><option>Defusion (quick)</option>
+        <option>TIPP</option><option>STOP</option><option>ACCEPTS</option><option>Self-soothe</option>
+        <option>Radical acceptance</option><option>Opposite action</option><option>Check the facts</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <button class="btn block" onclick="saveEntry()">Save check-in</button>
+    <button class="btn block ghost" id="cancelRecheck" style="display:none" onclick="cancelRecheck()">Cancel re-check</button>
+  </div>
+
+  <div class="card" id="pendingCard" style="display:none">
+    <h3>Open loop</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px" id="pendingText"></p>
+    <button class="btn small calm" onclick="beginRecheck()">Re-check now</button>
+  </div>
+
+  <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">The graph of dread</h3>
+  <div class="preset-row" id="metricRow"></div>
+  <canvas id="chart" width="640" height="220"></canvas>
+
+  <div class="stat-grid" id="statGrid"></div>
+
+  <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">History</h3>
+  <div id="historyHost"></div>
+</section>
+
+<!-- ============ PERSPECTIVE ============ -->
+<section class="panel" id="p-quotes">
+  <h2>Perspective</h2>
+  <div class="sub">Horror and the void, prescribed off-label for panic.</div>
+  <div class="preset-row">
+    <button class="chip on" data-deck="all" onclick="setDeck(this)">Both</button>
+    <button class="chip" data-deck="horror" onclick="setDeck(this)">Horror</button>
+    <button class="chip" data-deck="void" onclick="setDeck(this)">The Void</button>
+  </div>
+  <div class="quote-card" id="quoteCard"></div>
+  <button class="btn block ghost" onclick="nextQuote()">Draw another</button>
+</section>
+
+<!-- ============ DATA ============ -->
+<section class="panel" id="p-data">
+  <h2>Data</h2>
+  <div class="sub">Your dread, portable.</div>
+  <div class="card">
+    <h3>Export</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Everything lives on this device (localStorage). Nothing is sent anywhere.</p>
+    <div class="row">
+      <button class="btn small" onclick="exportJSON()">Export JSON</button>
+      <button class="btn small" onclick="exportCSV()">Export CSV</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Import</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Restore from a previously exported JSON file.</p>
+    <input type="file" id="importFile" accept=".json" style="color:var(--bone-dim);font-size:13px">
+    <button class="btn small ghost" onclick="importJSON()">Import</button>
+  </div>
+  <div class="card">
+    <h3>Burn it down</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Delete all local data. No resurrection in the sequel.</p>
+    <button class="btn small danger" onclick="wipe()">Delete everything</button>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ SOS overlay ============ -->
+<div id="sosOverlay" role="dialog" aria-modal="true">
+  <div class="big" id="sosPhase">PANIC PROTOCOL</div>
+  <div class="monocle" id="sosMonocle" style="margin:18px 0"><span class="breath-word" id="sosWord"></span></div>
+  <div class="txt" id="sosText"></div>
+  <div class="row" style="margin-top:22px;justify-content:center">
+    <button class="btn ghost small" onclick="sosNext()" id="sosNextBtn" style="display:none">Next</button>
+    <button class="btn danger small" onclick="endSOS()">Exit</button>
+  </div>
+</div>
+
+<nav>
+  <button class="active" data-p="p-sos" onclick="go('p-sos')"><span class="ico">☠</span>SOS</button>
+  <button data-p="p-breathe" onclick="go('p-breathe')"><span class="ico">◎</span>Breathe</button>
+  <button data-p="p-ground" onclick="go('p-ground')"><span class="ico">⚓</span>Ground</button>
+  <button data-p="p-defuse" onclick="go('p-defuse')"><span class="ico">🍂</span>Defuse</button>
+  <button data-p="p-skills" onclick="go('p-skills')"><span class="ico">⚔</span>Skills</button>
+  <button data-p="p-track" onclick="go('p-track')"><span class="ico">✎</span>Track</button>
+  <button data-p="p-quotes" onclick="go('p-quotes')"><span class="ico">🕯</span>Void</button>
+  <button data-p="p-data" onclick="go('p-data')"><span class="ico">⇩</span>Data</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= storage (localStorage w/ in-memory fallback) ================= */
+const Store = (() => {
+  let mem = {};
+  let ok = true;
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t'); } catch(e){ ok = false; }
+  return {
+    get(k, d){ try { const v = ok ? localStorage.getItem(k) : mem[k]; return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+    set(k, v){ const s = JSON.stringify(v); if (ok) { try{ localStorage.setItem(k, s); }catch(e){} } mem[k]=s; },
+    del(k){ if (ok) localStorage.removeItem(k); delete mem[k]; },
+    persistent: ok
+  };
+})();
+const KEY = 'kyh_entries_v1';
+const KEY_PENDING = 'kyh_pending_v1';
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* ================= navigation ================= */
+function go(id){
+  document.querySelectorAll('section.panel').forEach(s=>s.classList.toggle('active', s.id===id));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b.dataset.p===id));
+  window.scrollTo({top:0});
+  if (id==='p-track') renderTrack();
+}
+
+/* ================= BREATHE ================= */
+const PRESETS = [
+  {name:'Box 4·4·4·4', i:4,h1:4,o:4,h2:4},
+  {name:'4·7·8', i:4,h1:7,o:8,h2:0},
+  {name:'Coherent 5.5', i:5.5,h1:0,o:5.5,h2:0},
+  {name:'Long exhale 4·6', i:4,h1:0,o:6,h2:0},
+  {name:'Custom', i:null}
+];
+let breathing = false, breathTimer = null, cyclesLeft = 0;
+
+function initPresets(){
+  const row = document.getElementById('presetRow');
+  PRESETS.forEach((p,idx)=>{
+    const b = document.createElement('button');
+    b.className = 'chip' + (idx===0?' on':'');
+    b.textContent = p.name;
+    b.onclick = ()=>{
+      document.querySelectorAll('#presetRow .chip').forEach(c=>c.classList.remove('on'));
+      b.classList.add('on');
+      if (p.i !== null){
+        setSlider('sIn',p.i); setSlider('sH1',p.h1); setSlider('sOut',p.o); setSlider('sH2',p.h2);
+      }
+    };
+    row.appendChild(b);
+  });
+  [['sIn','vIn'],['sH1','vH1'],['sOut','vOut'],['sH2','vH2'],['sCyc','vCyc']].forEach(([s,v])=>{
+    const el = document.getElementById(s);
+    el.addEventListener('input', ()=>{
+      document.getElementById(v).textContent = s==='sCyc' ? el.value : el.value + 's';
+      // switching to custom
+      if (s!=='sCyc'){
+        document.querySelectorAll('#presetRow .chip').forEach(c=>c.classList.toggle('on', c.textContent==='Custom'));
+      }
+    });
+  });
+}
+function setSlider(id, val){
+  const el = document.getElementById(id);
+  el.value = val;
+  const map = {sIn:'vIn',sH1:'vH1',sOut:'vOut',sH2:'vH2'};
+  document.getElementById(map[id]).textContent = val + 's';
+}
+function toggleBreath(){
+  if (breathing){ stopBreath(); return; }
+  breathing = true;
+  document.getElementById('breathBtn').textContent = 'Stop';
+  cyclesLeft = parseInt(document.getElementById('sCyc').value, 10);
+  runCycle(document.getElementById('monocle'), document.getElementById('breathWord'), document.getElementById('breathCount'), ()=>{
+    stopBreath(); toast('Cycle complete. Consider a re-check in Track.');
+  });
+}
+function stopBreath(){
+  breathing = false;
+  clearTimeout(breathTimer);
+  document.getElementById('breathBtn').textContent = 'Begin';
+  const m = document.getElementById('monocle');
+  m.style.transition = 'transform .6s ease'; m.style.transform = 'scale(1)';
+  document.getElementById('breathWord').textContent = 'ready';
+  document.getElementById('breathCount').textContent = '';
+}
+function getPhases(){
+  const g = id => parseFloat(document.getElementById(id).value);
+  const ph = [
+    {w:'inhale', t:g('sIn'), s:2.1},
+    {w:'hold',   t:g('sH1'), s:2.1},
+    {w:'exhale', t:g('sOut'), s:1},
+    {w:'hold',   t:g('sH2'), s:1}
+  ];
+  return ph.filter(p=>p.t > 0);
+}
+function runCycle(monocle, wordEl, countEl, done){
+  const phases = getPhases();
+  let pi = 0;
+  const step = ()=>{
+    if (!breathing && monocle.id==='monocle'){ return; }
+    if (pi >= phases.length){
+      cyclesLeft--;
+      if (cyclesLeft <= 0){ done(); return; }
+      pi = 0;
+    }
+    const p = phases[pi];
+    wordEl.textContent = p.w;
+    if (countEl) countEl.textContent = cyclesLeft + (cyclesLeft===1?' cycle left':' cycles left');
+    monocle.style.transition = 'transform ' + p.t + 's ' + (p.w==='hold' ? 'linear' : 'cubic-bezier(.4,0,.4,1)');
+    monocle.style.transform = 'scale(' + p.s + ')';
+    pi++;
+    breathTimer = setTimeout(step, p.t * 1000);
+  };
+  step();
+}
+
+/* ================= 5-4-3-2-1 ================= */
+const G_STEPS = [
+  [5,'see','Look around. Name five things you can see. The weirder the detail, the better.'],
+  [4,'feel','Four things you can physically feel — chair, fabric, air, your own pulse.'],
+  [3,'hear','Three sounds. Include the boring ones. The refrigerator counts.'],
+  [2,'smell','Two things you can smell, or two smells you like.'],
+  [1,'taste','One thing you can taste. Or take a sip of something and cheat.']
+];
+let gIdx = -1, gCount = 0;
+function start54321(){ gIdx = 0; gCount = 0; render54321(); }
+function reset54321(){ gIdx = -1; render54321(); }
+function render54321(){
+  const host = document.getElementById('g54321');
+  if (gIdx < 0){ host.innerHTML = '<p style="font-size:14px;color:var(--fog)">Press start when the room starts feeling far away.</p>'; return; }
+  if (gIdx >= G_STEPS.length){
+    host.innerHTML = '<p style="font-family:var(--display);font-size:17px;color:var(--good)">Back in the room. The room was here the whole time.</p>';
+    return;
+  }
+  const [n, sense, prompt] = G_STEPS[gIdx];
+  const left = n - gCount;
+  host.innerHTML =
+    '<div style="font-family:var(--displaysc);font-size:22px;color:var(--brass);margin:8px 0 4px">' + left + ' to ' + sense + '</div>' +
+    '<p style="font-size:14.5px;margin-bottom:10px">' + prompt + '</p>' +
+    '<input type="text" id="gInput" placeholder="name it (or just tap Got one)">' +
+    '<button class="btn small calm" onclick="tally54321()">Got one</button>';
+  const inp = document.getElementById('gInput');
+  inp.addEventListener('keydown', e=>{ if(e.key==='Enter') tally54321(); });
+}
+function tally54321(){
+  gCount++;
+  if (gCount >= G_STEPS[gIdx][0]){ gIdx++; gCount = 0; }
+  render54321();
+}
+
+/* ================= guided players ================= */
+const SCRIPTS = {
+  pelvic: {
+    title:'Pelvic Floor Drop',
+    steps:[
+      ['Sit or lie down. Uncross everything. Let your hands rest heavy.', 12],
+      ['Notice your jaw. Unclench it. Let your tongue fall from the roof of your mouth. The jaw and the pelvic floor are old conspirators — release one and the other listens.', 18],
+      ['Take a slow breath into your belly. Let it be low and wide, like filling the basement before the attic.', 14],
+      ['Now find the pelvic floor: the hammock of muscle between your sit bones. You do not need to do anything with it yet. Just find it.', 16],
+      ['On your next inhale, imagine the sit bones widening apart, the hammock softening downward — like an elevator descending one floor.', 16],
+      ['Exhale slowly, and simply do not re-grip. The work here is subtraction.', 14],
+      ['Inhale — belly expands, pelvic floor descends another imaginary floor. Exhale — leave it there.', 16],
+      ['If it helps, gently bear down about ten percent, as if sighing through your pelvis. Then release even that.', 16],
+      ['Scan upward: soften the belly, the diaphragm, the chest, the throat, the jaw again. Threat bracing runs the whole column. So does release.', 18],
+      ['Three more slow breaths. Nothing to achieve. The elevator is parked in the basement and the building is quiet.', 20],
+      ['Notice how the body feels compared to four minutes ago. That difference is data. You made it happen with zero heroics.', 14]
+    ]
+  },
+  pmr: {
+    title:'Rapid PMR',
+    steps:[
+      ['We will tense each muscle group hard for five seconds, then release for ten. The contrast is the medicine.', 10],
+      ['Hands and forearms: make two fists. Squeeze. Hold... and release. Feel the difference flood in.', 16],
+      ['Upper arms: curl your biceps like a terrible bodybuilder. Hold... release. Let the arms go heavy.', 16],
+      ['Shoulders: shrug them to your ears. Hold the ugliness... and drop them like a marionette with cut strings.', 16],
+      ['Face: scrunch everything toward your nose. Hold... release. Let the face go slack and unbothered.', 16],
+      ['Chest and belly: breathe in, tighten your core. Hold... and exhale everything.', 16],
+      ['Thighs: press your knees together, tense the legs. Hold... release into the chair.', 16],
+      ['Calves and feet: point your toes, curl them under. Hold... and let go completely.', 16],
+      ['Whole body: one gentle full-body tension at fifty percent... and release. Sink.', 14],
+      ['Rest here. Every muscle you just released was holding a little bit of the panic. It is on the floor now.', 14]
+    ]
+  },
+  leaves: {
+    title:'Leaves on a Stream',
+    steps:[
+      ['Settle in. Eyes closed or soft focus. A few slow breaths — nothing fancy.', 14],
+      ['Picture yourself sitting on the bank of a slow-moving stream. Autumn. The water moves at its own pace and has never once asked your opinion.', 18],
+      ['Leaves drift past on the surface — one at a time, unhurried.', 12],
+      ['Now begin to notice your thoughts as they show up. Words, images, worries, plans, complaints. All eligible.', 16],
+      ['Take the next thought that arrives, place it on a leaf, and let the leaf carry it downstream. No shoving. The stream handles logistics.', 18],
+      ['Another thought will come. It always does. Same procedure: onto a leaf, into the current.', 16],
+      ['If a thought is sticky — a scary one, an important-feeling one — it goes on a leaf anyway. Sticky thoughts float exactly as well as boring ones.', 18],
+      ['If you notice the thought "this is stupid" or "this isn\'t working" — congratulations, those are thoughts. Leaves for both.', 16],
+      ['You will get pulled downstream, chasing a leaf. Everyone does. When you notice, just walk back up the bank and sit down again. That noticing is the entire skill.', 20],
+      ['You are not trying to make the thoughts stop. You are practicing being the bank, not the water.', 16],
+      ['A minute of quiet practice now. Thought, leaf, stream. Repeat.', 45],
+      ['Keep going. If your mind wandered off entirely, that\'s fine — return, place, release.', 45],
+      ['Last few leaves. Notice: the stream never backed up. It took everything you gave it.', 20],
+      ['Let the image dissolve. Feel your body in the chair, feet on the floor. Open your eyes. The thoughts will keep coming all day — but now you\'ve rehearsed the part where you don\'t have to board every single one.', 18]
+    ]
+  },
+  bus: {
+    title:'Passengers on the Bus',
+    steps:[
+      ['You are driving a bus. The bus is your life, and it goes where you steer it.', 12],
+      ['At various stops, passengers have boarded. Some are pleasant. Some are anxiety, dread, self-criticism — loud, ugly passengers with strong opinions about your driving.', 18],
+      ['The loud ones yell from the back: "Pull over!" "Turn around!" "You\'re going to crash!" They\'ve been yelling for years.', 16],
+      ['Here\'s what you\'ve tried: stopping the bus to argue with them. Notice how that goes — the bus stops moving. They don\'t get off.', 16],
+      ['Here\'s the thing nobody mentions: the passengers cannot touch the wheel. They have never once touched the wheel. All they have is volume.', 18],
+      ['Pick your direction — the thing that matters to you today. Say it to yourself. That\'s the route.', 16],
+      ['Now drive. The passengers will yell. Let them yell in your peripheral hearing, like talk radio in a language you half know.', 16],
+      ['You don\'t need them to leave. You don\'t need them to be quiet. You need your hands on the wheel and your eyes on the road. That\'s all driving has ever required.', 18],
+      ['Notice one small action you can take today with the passengers still aboard. That action is you, driving.', 16]
+    ]
+  }
+};
+let player = { timer:null, script:null, idx:0, paused:false };
+function startPlayer(key){
+  stopPlayer();
+  const sc = SCRIPTS[key];
+  player = { timer:null, script:sc, idx:0, paused:false };
+  const host = document.getElementById('playerHost');
+  host.innerHTML =
+    '<div class="player" id="thePlayer">' +
+      '<div class="meta" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog)">' + sc.title + '</div>' +
+      '<div class="script" id="plScript"></div>' +
+      '<div class="prog"><i id="plProg"></i></div>' +
+      '<div class="ctr">' +
+        '<span class="stepnum" id="plStep"></span>' +
+        '<span>' +
+          '<button class="btn small ghost" id="plPause" onclick="pausePlayer()">Pause</button> ' +
+          '<button class="btn small ghost" onclick="nextStep()">Skip</button> ' +
+          '<button class="btn small danger" onclick="stopPlayer(true)">End</button>' +
+        '</span>' +
+      '</div>' +
+    '</div>';
+  host.scrollIntoView({behavior:'smooth', block:'center'});
+  showStep();
+}
+function showStep(){
+  const sc = player.script;
+  if (!sc) return;
+  if (player.idx >= sc.steps.length){
+    document.getElementById('plScript').textContent = 'Done. Consider a quick re-check in Track to log whether the numbers moved.';
+    document.getElementById('plStep').textContent = 'complete';
+    document.getElementById('plProg').style.width = '100%';
+    return;
+  }
+  const [text, secs] = sc.steps[player.idx];
+  const el = document.getElementById('plScript');
+  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+  el.textContent = text;
+  document.getElementById('plStep').textContent = (player.idx+1) + ' / ' + sc.steps.length;
+  document.getElementById('plProg').style.width = ((player.idx) / sc.steps.length * 100) + '%';
+  clearTimeout(player.timer);
+  if (!player.paused) player.timer = setTimeout(nextStep, secs * 1000);
+}
+function nextStep(){ if(!player.script) return; player.idx++; showStep(); }
+function pausePlayer(){
+  player.paused = !player.paused;
+  document.getElementById('plPause').textContent = player.paused ? 'Resume' : 'Pause';
+  if (player.paused) clearTimeout(player.timer); else showStep();
+}
+function stopPlayer(clear){
+  clearTimeout(player.timer);
+  player.script = null;
+  if (clear) document.getElementById('playerHost').innerHTML = '';
+}
+
+/* ================= SKILLS content ================= */
+const SKILLS = [
+ {cat:'Distress Tolerance', title:'TIPP — crash the physiology', body:`
+  <p>For when arousal is 8+ and no verbal skill will land. Change the body first.</p>
+  <ol>
+   <li><b>T — Temperature:</b> Cold water to the face, ice in the hand, cold shower burst. Dive reflex slows the heart in seconds.</li>
+   <li><b>I — Intense exercise:</b> 60–90 seconds of anything hard: stairs, jumping jacks, fast walk. Burn the adrenaline it already printed.</li>
+   <li><b>P — Paced breathing:</b> Exhale longer than the inhale (use the Breathe tab, "Long exhale 4·6").</li>
+   <li><b>P — Paired muscle relaxation:</b> Tense on the inhale, release on the exhale (Rapid PMR in Ground).</li>
+  </ol>
+  <p class="whisper">You cannot out-argue adrenaline. You can outlast and metabolize it.</p>`},
+ {cat:'Distress Tolerance', title:'STOP — the circuit breaker', body:`
+  <ol>
+   <li><b>S — Stop.</b> Freeze. Do not move, speak, send, or reply.</li>
+   <li><b>T — Take a step back.</b> Physically if possible. Breathe once.</li>
+   <li><b>O — Observe.</b> What's happening inside and outside? Facts only, no commentary track.</li>
+   <li><b>P — Proceed mindfully.</b> Ask: what action serves my goals here, not my adrenaline?</li>
+  </ol>
+  <p class="whisper">Every horror movie death is someone skipping the S.</p>`},
+ {cat:'Distress Tolerance', title:'ACCEPTS — strategic distraction', body:`
+  <p>Not avoidance — triage. Buy time until the wave crests.</p>
+  <ul>
+   <li><b>A — Activities:</b> Anything absorbing. Guitar scales. One level of a game.</li>
+   <li><b>C — Contributing:</b> Do something for someone else. Text a friend something kind.</li>
+   <li><b>C — Comparisons:</b> Compare to your own worse moments you survived (not to other people).</li>
+   <li><b>E — Emotions (opposite):</b> Comedy for dread, energetic music for numbness.</li>
+   <li><b>P — Pushing away:</b> Put the problem in a box on a shelf. Schedule a time to open it.</li>
+   <li><b>T — Thoughts:</b> Count backwards by 7s. Name every horror director you can, alphabetically.</li>
+   <li><b>S — Sensations:</b> Strong sensory input — sour candy, loud riff, hot shower.</li>
+  </ul>`},
+ {cat:'Distress Tolerance', title:'Self-Soothe — five senses, on purpose', body:`
+  <ul>
+   <li><b>Sight:</b> Something you actually like looking at. Sunset, dog, a good film frame.</li>
+   <li><b>Sound:</b> The album that has never once failed you.</li>
+   <li><b>Smell:</b> Coffee, rain, your dog's ridiculous head.</li>
+   <li><b>Taste:</b> One thing, eaten slowly, like it matters.</li>
+   <li><b>Touch:</b> Weighted blanket, warm shower, dog again (dogs are load-bearing here).</li>
+  </ul>
+  <p class="whisper">Comfort is not weakness. It's maintenance on the only vehicle you get.</p>`},
+ {cat:'Distress Tolerance', title:'Radical Acceptance — stop fighting reality\'s plot', body:`
+  <ol>
+   <li>Notice you're fighting reality ("this shouldn't be happening").</li>
+   <li>Remind yourself: reality already happened. The vote is over.</li>
+   <li>Acceptance ≠ approval. You can accept the storm and still hate the rain.</li>
+   <li>Turn the mind, again and again — acceptance is a choice you re-make, not a place you arrive.</li>
+   <li>Ask: "If I fully accepted this, what would I do next?" Then do a small version of that.</li>
+  </ol>
+  <p class="whisper">Pain is the ticket price. Suffering is the surcharge for arguing with the ticket.</p>`},
+ {cat:'Distress Tolerance', title:'Pros & Cons — the 2×2 of urges', body:`
+  <p>When an urge shows up (avoid, cancel, lash out, doomscroll), sketch the grid:</p>
+  <ul>
+   <li>Pros of acting on the urge — short term (there are always some; be honest).</li>
+   <li>Cons of acting on it — usually arrive Tuesday.</li>
+   <li>Pros of riding it out.</li>
+   <li>Cons of riding it out (yes, it's uncomfortable; write that down too).</li>
+  </ul>
+  <p class="whisper">Urges are terrible financial advisors: great pitch, brutal fees.</p>`},
+ {cat:'Emotion Regulation', title:'Check the Facts', body:`
+  <ol>
+   <li>Name the emotion and rate its intensity (0–10).</li>
+   <li>What is the prompting event? Just the facts — camera footage, no narration.</li>
+   <li>What interpretations, assumptions, and predictions did the brain bolt on?</li>
+   <li>Does the emotion fit the facts, and does the intensity fit? A 9 for a 3-sized fact means the story, not the event, is driving.</li>
+   <li>If it doesn't fit — opposite action. If it does fit — problem solve.</li>
+  </ol>`},
+ {cat:'Emotion Regulation', title:'Opposite Action', body:`
+  <p>When the emotion doesn't fit the facts (or acting on it makes things worse), act opposite — all the way, body included.</p>
+  <ul>
+   <li><b>Anxiety says avoid</b> → approach. Repeatedly. Casually. Shoulders down, voice steady.</li>
+   <li><b>Depression says stay in bed</b> → get active, opposite posture, do the small thing.</li>
+   <li><b>Anger says attack</b> → gently avoid or be decent; unclench hands, relax face.</li>
+   <li><b>Shame says hide</b> → share it with someone safe, head up.</li>
+  </ul>
+  <p class="whisper">The feeling follows the behavior home. Usually sulking, but it follows.</p>`},
+ {cat:'Emotion Regulation', title:'PLEASE — the boring infrastructure', body:`
+  <p>Emotional vulnerability is mostly logistics. Guard the machine:</p>
+  <ul>
+   <li><b>PL — treat PhysicaL illness:</b> take the meds, see the doctor, actually rest.</li>
+   <li><b>E — balanced Eating:</b> steady fuel, watch the glycemic rollercoaster.</li>
+   <li><b>A — Avoid mood-altering substances:</b> they collect interest.</li>
+   <li><b>S — balanced Sleep:</b> the single highest-leverage anxiety intervention that nobody wants to hear about.</li>
+   <li><b>E — Exercise:</b> 20 minutes changes brain chemistry more reliably than 20 minutes of worrying.</li>
+  </ul>`},
+ {cat:'Emotion Regulation', title:'Name It to Tame It — affect labeling', body:`
+  <ol>
+   <li>Pause and locate the feeling in the body (chest, throat, gut).</li>
+   <li>Give it a precise name. Not "bad" — try "dread," "humiliation," "anticipatory grief," "Sunday-night existential static."</li>
+   <li>Say it as an observation: "There's dread here" — not "I am dread."</li>
+   <li>Precision alone measurably dials down amygdala reactivity. Vocabulary is a regulation skill.</li>
+  </ol>`}
+];
+function initSkills(){
+  const host = document.getElementById('skillsHost');
+  SKILLS.forEach(s=>{
+    const d = document.createElement('details');
+    d.innerHTML = '<summary><span class="st">' + s.title + '</span><span class="cat">' + s.cat + '</span></summary><div class="body">' + s.body + '</div>';
+    host.appendChild(d);
+  });
+}
+
+/* ================= TRACKING ================= */
+const EMOTIONS = ['anxious','panicked','dread','overwhelmed','irritable','sad','numb','ashamed','restless','exhausted','hopeless','wired','okay-ish'];
+let selectedEmos = new Set();
+let recheckTarget = null;
+let chartMetric = 'anxiety';
+
+function initTrack(){
+  const host = document.getElementById('emoChips');
+  EMOTIONS.forEach(e=>{
+    const b = document.createElement('button');
+    b.className = 'chip'; b.textContent = e; b.type = 'button';
+    b.onclick = ()=>{ b.classList.toggle('on'); b.classList.contains('on') ? selectedEmos.add(e) : selectedEmos.delete(e); };
+    host.appendChild(b);
+  });
+  [['rAnx','rAnxV'],['rPan','rPanV'],['rDep','rDepV'],['rStr','rStrV']].forEach(([r,v])=>{
+    const el = document.getElementById(r);
+    el.addEventListener('input', ()=>document.getElementById(v).textContent = el.value);
+  });
+  const mrow = document.getElementById('metricRow');
+  [['anxiety','Anxiety'],['panic','Panic'],['depression','Depression'],['stress','Stress']].forEach(([k,l],i)=>{
+    const b = document.createElement('button');
+    b.className = 'chip' + (i===0?' on':''); b.textContent = l;
+    b.onclick = ()=>{ chartMetric = k; document.querySelectorAll('#metricRow .chip').forEach(c=>c.classList.remove('on')); b.classList.add('on'); drawChart(); };
+    mrow.appendChild(b);
+  });
+}
+function entries(){ return Store.get(KEY, []); }
+function saveEntries(list){ Store.set(KEY, list); }
+
+function saveEntry(){
+  const e = {
+    id: Date.now(),
+    ts: new Date().toISOString(),
+    situation: document.getElementById('fSituation').value.trim(),
+    thoughts: document.getElementById('fThoughts').value.trim(),
+    emotions: [...selectedEmos],
+    anxiety: +document.getElementById('rAnx').value,
+    panic: +document.getElementById('rPan').value,
+    depression: +document.getElementById('rDep').value,
+    stress: +document.getElementById('rStr').value,
+    type: recheckTarget ? 'recheck' : 'checkin',
+    parent: recheckTarget || null,
+    skill: recheckTarget ? document.getElementById('fSkillUsed').value : null
+  };
+  const list = entries(); list.push(e); saveEntries(list);
+  if (recheckTarget){ Store.del(KEY_PENDING); recheckTarget = null; toast('Re-check saved. Delta logged.'); }
+  else { Store.set(KEY_PENDING, e.id); toast('Saved. Do a skill, then re-check in 10–20 min.'); }
+  clearForm(); renderTrack();
+}
+function clearForm(){
+  ['fSituation','fThoughts'].forEach(id=>document.getElementById(id).value='');
+  selectedEmos.clear();
+  document.querySelectorAll('#emoChips .chip').forEach(c=>c.classList.remove('on'));
+  document.getElementById('skillUsedWrap').style.display = 'none';
+  document.getElementById('cancelRecheck').style.display = 'none';
+  document.getElementById('recheckBanner').style.display = 'none';
+  document.getElementById('entryTitle').textContent = 'New check-in';
+}
+function beginRecheck(){
+  const pid = Store.get(KEY_PENDING, null);
+  const parent = entries().find(e=>e.id===pid);
+  if (!parent){ Store.del(KEY_PENDING); renderTrack(); return; }
+  recheckTarget = pid;
+  document.getElementById('entryTitle').textContent = 'Re-check';
+  const rb = document.getElementById('recheckBanner');
+  rb.style.display = 'block';
+  rb.textContent = 'Comparing against your check-in from ' + fmtTime(parent.ts) + ' (anx ' + parent.anxiety + ' · panic ' + parent.panic + ' · dep ' + parent.depression + ' · stress ' + parent.stress + ').';
+  document.getElementById('skillUsedWrap').style.display = 'block';
+  document.getElementById('cancelRecheck').style.display = 'block';
+  document.getElementById('newEntryCard').scrollIntoView({behavior:'smooth'});
+}
+function cancelRecheck(){ recheckTarget = null; clearForm(); }
+function fmtTime(iso){
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+}
+function renderTrack(){
+  // pending re-check card
+  const pid = Store.get(KEY_PENDING, null);
+  const pend = document.getElementById('pendingCard');
+  if (pid && entries().find(e=>e.id===pid)){
+    const p = entries().find(e=>e.id===pid);
+    const mins = Math.round((Date.now() - p.id)/60000);
+    pend.style.display = 'block';
+    document.getElementById('pendingText').textContent = 'You checked in ' + mins + ' min ago (anxiety ' + p.anxiety + ', panic ' + p.panic + '). Used a skill yet? Re-rate to see if the numbers moved.';
+  } else pend.style.display = 'none';
+
+  // history
+  const host = document.getElementById('historyHost');
+  const list = entries().slice().reverse();
+  if (!list.length){ host.innerHTML = '<p style="font-size:14px;color:var(--bone-dim)">Nothing yet. The graph of dread awaits its first data point.</p>'; }
+  else {
+    host.innerHTML = list.slice(0,40).map(e=>{
+      let deltaHtml = '';
+      if (e.type==='recheck' && e.parent){
+        const par = entries().find(x=>x.id===e.parent);
+        if (par){
+          const d = (par.anxiety + par.panic + par.stress) - (e.anxiety + e.panic + e.stress);
+          const cls = d >= 0 ? 'delta-good' : 'delta-bad';
+          deltaHtml = ' · <span class="' + cls + '">' + (d>=0?'−':'+') + Math.abs(d) + ' total after ' + esc(e.skill||'skill') + '</span>';
+        }
+      }
+      return '<div class="entry">' +
+        '<div class="when">' + fmtTime(e.ts) + (e.type==='recheck' ? ' · RE-CHECK' : '') + '</div>' +
+        '<div class="nums">anx ' + e.anxiety + ' · panic ' + e.panic + ' · dep ' + e.depression + ' · stress ' + e.stress + deltaHtml + '</div>' +
+        (e.emotions.length ? '<div class="nums">' + e.emotions.map(esc).join(', ') + '</div>' : '') +
+        (e.situation ? '<div class="sit">' + esc(e.situation) + '</div>' : '') +
+        (e.thoughts ? '<div class="sit" style="color:var(--bone-dim);font-style:italic">"' + esc(e.thoughts) + '"</div>' : '') +
+      '</div>';
+    }).join('');
+  }
+  drawChart();
+  drawStats();
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function drawStats(){
+  const list = entries();
+  const rechecks = list.filter(e=>e.type==='recheck' && e.parent);
+  let totalDrop = 0, n = 0;
+  const bySkill = {};
+  rechecks.forEach(e=>{
+    const par = list.find(x=>x.id===e.parent);
+    if (!par) return;
+    const d = (par.anxiety + par.panic + par.stress) - (e.anxiety + e.panic + e.stress);
+    totalDrop += d; n++;
+    const k = e.skill || 'Other';
+    (bySkill[k] = bySkill[k] || []).push(d);
+  });
+  let best = '—', bestAvg = -Infinity;
+  Object.entries(bySkill).forEach(([k,arr])=>{
+    const avg = arr.reduce((a,b)=>a+b,0)/arr.length;
+    if (avg > bestAvg){ bestAvg = avg; best = k; }
+  });
+  const days = new Set(list.map(e=>e.ts.slice(0,10))).size;
+  document.getElementById('statGrid').innerHTML =
+    '<div class="stat"><div class="n">' + list.length + '</div><div class="l">entries</div></div>' +
+    '<div class="stat"><div class="n">' + days + '</div><div class="l">days tracked</div></div>' +
+    '<div class="stat"><div class="n">' + (n ? (totalDrop/n).toFixed(1) : '—') + '</div><div class="l">avg drop after skill</div></div>' +
+    '<div class="stat"><div class="n" style="font-size:15px;padding-top:6px">' + esc(best) + '</div><div class="l">most effective skill</div></div>';
+}
+
+function drawChart(){
+  const cv = document.getElementById('chart');
+  const dpr = window.devicePixelRatio || 1;
+  const w = cv.clientWidth || 640, h = 220;
+  cv.width = w * dpr; cv.height = h * dpr;
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,w,h);
+  const list = entries();
+  const pad = {l:28, r:10, t:14, b:22};
+  // grid
+  ctx.strokeStyle = 'rgba(201,164,92,.15)'; ctx.fillStyle = '#8FA3B0';
+  ctx.font = '10px monospace'; ctx.lineWidth = 1;
+  for (let v=0; v<=10; v+=2){
+    const y = pad.t + (h - pad.t - pad.b) * (1 - v/10);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+    ctx.fillText(v, 8, y + 3);
+  }
+  if (list.length < 2){
+    ctx.fillStyle = '#B9AE97'; ctx.font = 'italic 13px Georgia';
+    ctx.fillText('Two or more entries required to plot the dread.', pad.l + 10, h/2);
+    return;
+  }
+  const xs = list.map((e,i)=> pad.l + (w - pad.l - pad.r) * (list.length===1 ? 0 : i/(list.length-1)));
+  const ys = list.map(e=> pad.t + (h - pad.t - pad.b) * (1 - (e[chartMetric]||0)/10));
+  ctx.strokeStyle = '#C9A45C'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  xs.forEach((x,i)=> i ? ctx.lineTo(x, ys[i]) : ctx.moveTo(x, ys[i]));
+  ctx.stroke();
+  list.forEach((e,i)=>{
+    ctx.beginPath();
+    ctx.fillStyle = e.type==='recheck' ? '#7FA36B' : '#B4494D';
+    ctx.arc(xs[i], ys[i], 3.5, 0, Math.PI*2); ctx.fill();
+  });
+  // legend
+  ctx.fillStyle = '#B4494D'; ctx.fillRect(pad.l, h-12, 8, 8);
+  ctx.fillStyle = '#B9AE97'; ctx.fillText('check-in', pad.l + 12, h-5);
+  ctx.fillStyle = '#7FA36B'; ctx.fillRect(pad.l + 72, h-12, 8, 8);
+  ctx.fillStyle = '#B9AE97'; ctx.fillText('re-check', pad.l + 84, h-5);
+}
+
+/* ================= QUOTES ================= */
+const QUOTES = {
+ horror: [
+  ['We all go a little mad sometimes.','Psycho (1960)','A panic attack is the nervous system going a little mad on schedule. It always comes back.'],
+  ['They\'re coming to get you, Barbara.','Night of the Living Dead (1968)','They are not, in fact, coming to get you. It\'s Tuesday and you\'re holding a phone.'],
+  ['Be afraid. Be very afraid.','The Fly (1986)','Or: be afraid at a 4 instead of a 9, having checked the facts. Less quotable, more livable.'],
+  ['Sometimes dead is better.','Pet Sematary (1989)','Some worries deserve burial without resurrection. Stop digging them up to check.'],
+  ['Do you like scary movies?','Scream (1996)','You do. Which proves you can feel fear on purpose and enjoy the ride. Same nervous system. Same you.'],
+  ['You can\'t kill the boogeyman.','Halloween (1978)','Correct — anxiety doesn\'t die. It gets managed, like weather. You don\'t kill rain; you buy a coat.'],
+  ['In space no one can hear you scream.','Alien (1979)','Down here, though, 988 picks up, friends pick up, and the group chat is right there.'],
+  ['It\'s alive! It\'s alive!','Frankenstein (1931)','So are you. Against absurd odds. The heart pounding right now is proof of function, not failure.'],
+  ['Listen to them — the children of the night. What music they make.','Dracula (1931)','Even the Count reframed the howling as music. Your intrusive thoughts: same howling, same option.'],
+  ['This is no dream! This is really happening!','Rosemary\'s Baby (1968)','The panic is really happening. The catastrophe it\'s predicting is the dream part.'],
+  ['Come play with us.','The Shining (1980)','Your anxious thoughts, forever. You\'re allowed to decline. The hallway is just a hallway.'],
+  ['It knows what scares you.','Poltergeist (1982)','So do you now — it\'s in the tracking tab. Named, rated, and graphed. Monsters hate a spreadsheet.'],
+  ['Whatever you do, don\'t fall asleep.','A Nightmare on Elm Street (1984)','Terrible advice. Sleep is the single best anxiolytic you own. Freddy was a saboteur.'],
+  ['The power of positive thinking has nothing on the power of the final girl.','The genre, collectively','Final girls don\'t feel less fear. They act with it. That\'s the whole syllabus.']
+ ],
+ void: [
+  ['We suffer more often in imagination than in reality.','Seneca','Your amygdala is a horror screenwriter with an unlimited budget and no fact-checker.'],
+  ['Men are disturbed not by things, but by the views they take of them.','Epictetus','First-century check-the-facts. The Stoics beat DBT to it by two millennia.'],
+  ['He who has a why to live can bear almost any how.','Nietzsche','Panic is a how. Values are the why. Reconnect them and the how shrinks.'],
+  ['You have power over your mind — not outside events.','Marcus Aurelius','The emperor of Rome journaling himself through dread. Tracking sheets have imperial precedent.'],
+  ['One must still have chaos in oneself to give birth to a dancing star.','Nietzsche','The chaos isn\'t malfunction. It\'s raw material with terrible manners.'],
+  ['The universe is indifferent to your panic attack. That\'s not cruelty — that\'s permission.','The Cheerful Void','No cosmic judge is scoring this. You can be a mess for twenty minutes with zero eternal consequences.'],
+  ['You are a brief arrangement of stardust having a bad afternoon.','The Cheerful Void','Both halves matter: brief, and stardust. The afternoon is survivable by definition — you\'ve survived all of them so far.'],
+  ['Nothing matters cosmically. This spike of dread included.','The Cheerful Void','If nothing matters, the catastrophic thought doesn\'t matter either. Nihilism cuts both ways — take the discount.'],
+  ['Meaning isn\'t found. It\'s built. Usually with shaking hands.','The Cheerful Void','Every meaningful thing you\'ve made was made by a nervous system that also does this. Same hands.'],
+  ['Death anxiety wears a thousand masks. Panic is just the one with the worst timing.','The Cheerful Void','TMT in one line: the dread is old, universal, and survivable. You\'re in enormous company, all of it dead or dying, all of it fine right now.'],
+  ['The void doesn\'t stare back. It\'s not that interested.','The Cheerful Void','Freeing, honestly. You can stop performing composure for an audience that never bought a ticket.'],
+  ['The absurd hero knows the boulder rolls back down — and pushes anyway, sometimes whistling.','after Camus','You will feel anxiety again. That\'s the boulder. The whistling is optional but recommended.']
+ ]
+};
+let deck = 'all', lastQ = -1;
+function setDeck(btn){
+  deck = btn.dataset.deck;
+  document.querySelectorAll('#p-quotes .preset-row .chip').forEach(c=>c.classList.remove('on'));
+  btn.classList.add('on');
+  nextQuote();
+}
+function nextQuote(){
+  let pool = deck==='all' ? QUOTES.horror.concat(QUOTES.void) : QUOTES[deck];
+  let i;
+  do { i = Math.floor(Math.random()*pool.length); } while (pool.length > 1 && i === lastQ);
+  lastQ = i;
+  const [q, a, rf] = pool[i];
+  const card = document.getElementById('quoteCard');
+  card.style.animation = 'none'; void card.offsetWidth; card.style.animation = '';
+  card.innerHTML = '<div class="q">"' + q + '"</div><div class="a">— ' + a + '</div><div class="rf">' + rf + '</div>';
+}
+
+/* ================= SOS PROTOCOL ================= */
+const SOS_SEQ = [
+  {phase:'BREATHE', text:'Ninety seconds of long exhales. Follow the monocle. You don\'t have to feel better yet — you just have to breathe out slower than you breathe in.', breath:true, dur:90},
+  {phase:'ORIENT', text:'Look around the room. Slowly. Name five things you can see, out loud or in your head. Ugly things count.', dur:35},
+  {phase:'FEEL', text:'Press your feet into the floor. Feel the chair or the ground holding your weight. It has been holding you this entire time.', dur:25},
+  {phase:'NAME IT', text:'Say it plainly: "This is a panic response. It is intensely uncomfortable and not dangerous. It peaks and it passes. It always has."', dur:25},
+  {phase:'REMEMBER', text:'You have survived one hundred percent of your worst moments. Your track record against panic is literally undefeated.', dur:20},
+  {phase:'RE-CHECK', text:'When you exit, log a re-check in the Track tab. The numbers moving down is evidence your brain can\'t argue with. Exit whenever you\'re ready — no rush.', dur:0}
+];
+let sosIdx = 0, sosTimer = null, sosBreathing = false;
+function startSOS(){
+  sosIdx = 0;
+  document.getElementById('sosOverlay').classList.add('open');
+  runSOSStep();
+}
+function runSOSStep(){
+  clearTimeout(sosTimer); clearTimeout(breathTimer);
+  const s = SOS_SEQ[sosIdx];
+  if (!s){ endSOS(); return; }
+  document.getElementById('sosPhase').textContent = s.phase;
+  document.getElementById('sosText').textContent = s.text;
+  const m = document.getElementById('sosMonocle');
+  document.getElementById('sosNextBtn').style.display = s.dur === 0 ? 'inline-block' : 'none';
+  if (s.breath){
+    sosBreathing = true;
+    // long-exhale pattern 4 in / 6 out, run ~9 cycles inside 90s
+    const phases = [{w:'inhale',t:4,s:1.9},{w:'exhale',t:6,s:1}];
+    let pi = 0;
+    const step = ()=>{
+      if (!sosBreathing) return;
+      const p = phases[pi % 2];
+      document.getElementById('sosWord').textContent = p.w;
+      m.style.transition = 'transform ' + p.t + 's cubic-bezier(.4,0,.4,1)';
+      m.style.transform = 'scale(' + p.s + ')';
+      pi++;
+      breathTimer = setTimeout(step, p.t*1000);
+    };
+    step();
+  } else {
+    sosBreathing = false;
+    document.getElementById('sosWord').textContent = '';
+    m.style.transition = 'transform 1s ease'; m.style.transform = 'scale(1.2)';
+  }
+  if (s.dur > 0) sosTimer = setTimeout(()=>{ sosIdx++; runSOSStep(); }, s.dur * 1000);
+}
+function sosNext(){ sosIdx++; runSOSStep(); }
+function endSOS(){
+  sosBreathing = false;
+  clearTimeout(sosTimer); clearTimeout(breathTimer);
+  document.getElementById('sosOverlay').classList.remove('open');
+  go('p-track');
+  toast('Log a re-check — see if the numbers moved.');
+}
+
+/* ================= EXPORT / IMPORT ================= */
+function download(name, text, type){
+  const blob = new Blob([text], {type});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
+}
+function exportJSON(){
+  download('keep-your-head-' + new Date().toISOString().slice(0,10) + '.json',
+    JSON.stringify({exported:new Date().toISOString(), entries:entries()}, null, 2), 'application/json');
+  toast('JSON exported.');
+}
+function exportCSV(){
+  const rows = [['id','timestamp','type','anxiety','panic','depression','stress','emotions','skill','situation','thoughts']];
+  entries().forEach(e=>{
+    rows.push([e.id, e.ts, e.type, e.anxiety, e.panic, e.depression, e.stress,
+      (e.emotions||[]).join('; '), e.skill||'', e.situation||'', e.thoughts||'']);
+  });
+  const csv = rows.map(r=>r.map(c=>'"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
+  download('keep-your-head-' + new Date().toISOString().slice(0,10) + '.csv', csv, 'text/csv');
+  toast('CSV exported.');
+}
+function importJSON(){
+  const f = document.getElementById('importFile').files[0];
+  if (!f){ toast('Choose a JSON file first.'); return; }
+  const r = new FileReader();
+  r.onload = ()=>{
+    try{
+      const data = JSON.parse(r.result);
+      const inc = Array.isArray(data) ? data : data.entries;
+      if (!Array.isArray(inc)) throw new Error('bad format');
+      const cur = entries();
+      const ids = new Set(cur.map(e=>e.id));
+      inc.forEach(e=>{ if(!ids.has(e.id)) cur.push(e); });
+      cur.sort((a,b)=>a.id-b.id);
+      saveEntries(cur);
+      renderTrack();
+      toast('Imported ' + inc.length + ' entries (merged).');
+    }catch(err){ toast('Import failed: not a valid export file.'); }
+  };
+  r.readAsText(f);
+}
+function wipe(){
+  if (!confirm('Delete ALL tracking data on this device? This cannot be undone.')) return;
+  Store.del(KEY); Store.del(KEY_PENDING);
+  renderTrack(); toast('Everything deleted. Clean slate.');
+}
+
+/* ================= PWA manifest (runtime blob) ================= */
+(function(){
+  const svg = document.querySelector('header .mascot').outerHTML.replace('class="mascot" ', '');
+  const iconData = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="20" fill="#14101C"/>' +
+    svg.replace(/<\/?svg[^>]*>/g,'') + '</svg>'
+  )));
+  const manifest = {
+    name:'KEEP YOUR HEAD', short_name:'KYH',
+    start_url:'.', display:'standalone',
+    background_color:'#14101C', theme_color:'#14101C',
+    icons:[{src:iconData, sizes:'any', type:'image/svg+xml', purpose:'any'}]
+  };
+  const link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type:'application/json'}));
+  document.head.appendChild(link);
+  const fav = document.createElement('link');
+  fav.rel = 'icon'; fav.href = iconData;
+  document.head.appendChild(fav);
+})();
+
+/* ================= init ================= */
+initPresets();
+initSkills();
+initTrack();
+render54321();
+renderTrack();
+nextQuote();
+window.addEventListener('resize', drawChart);
+if (!Store.persistent){
+  console.warn('localStorage unavailable — running with in-memory storage (data will not persist).');
+}
+</script>
+</body>
+</html>
