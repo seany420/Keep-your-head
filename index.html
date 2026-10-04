@@ -223,7 +223,44 @@ label.f{font-size:13px;color:var(--fog);text-transform:uppercase;letter-spacing:
 .entry .delta-good{color:var(--good)}
 .entry .delta-bad{color:var(--oxblood-bright)}
 .entry .sit{margin-top:5px}
-canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgba(201,164,92,.2);border-radius:var(--radius)}
+input[type=date], input[type=time]{
+  width:100%;background:var(--ink3);border:1px solid var(--brass-dim);
+  border-radius:10px;color:var(--bone);padding:10px 12px;
+  font-family:var(--body);font-size:15px;margin:6px 0 12px;color-scheme:dark;
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible, .chip:focus-visible, summary:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.field-row{display:flex;gap:10px}
+.field-row > div{flex:1;min-width:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.seg{display:flex;background:var(--ink2);border:1px solid var(--brass-dim);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px}
+.seg button{flex:1;border:none;background:transparent;color:var(--bone-dim);font-family:var(--body);font-size:14px;font-weight:600;padding:10px 8px;border-radius:9px;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--brass);color:#1a1408}
+.seg button:focus-visible{outline:2px solid var(--bone);outline-offset:1px}
+.chart-wrap{position:relative;background:var(--ink2);border:1px solid rgba(201,164,92,.2);border-radius:var(--radius);padding:6px 4px 2px;margin-bottom:6px}
+.chart-wrap svg{display:block;width:100%;height:auto;touch-action:pan-y}
+.chart-wrap svg:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:var(--radius)}
+.chart-empty{font-family:var(--display);font-style:italic;color:var(--bone-dim);font-size:14px;padding:40px 16px;text-align:center}
+.chart-tip{position:absolute;pointer-events:none;background:var(--ink);border:1px solid var(--brass-dim);border-radius:8px;padding:6px 10px;font-size:12.5px;color:var(--bone-dim);white-space:nowrap;display:none;z-index:2}
+.chart-tip b{display:block;color:var(--bone);font-family:var(--mono);font-size:14px}
+.entry .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.entry .acts{display:flex;gap:6px;flex-shrink:0}
+.linkbtn{background:none;border:1px solid var(--brass-dim);color:var(--brass);border-radius:8px;padding:5px 10px;font-size:12.5px;cursor:pointer;font-family:var(--body)}
+.linkbtn.del{color:var(--oxblood-bright);border-color:rgba(180,73,77,.5)}
+.linkbtn:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.hint{font-size:13px;color:var(--bone-dim);margin:-4px 0 10px}
+.check-row{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--bone-dim);margin:6px 0}
+.check-row input{width:20px;height:20px;accent-color:var(--brass)}
+/* ---------- guided player overlay ---------- */
+#playerOverlay{
+  position:fixed;inset:0;background:rgba(14,10,20,.985);z-index:100;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+#playerOverlay.open{display:flex}
+#playerOverlay .player{width:100%;max-width:560px;min-height:340px}
+.player .ptitle{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog)}
+.player .ctr{flex-wrap:wrap;gap:10px}
+.player .ctr .row{gap:8px}
+.voice-note{font-size:12.5px;color:var(--bone-dim);margin-top:10px;min-height:1em}
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
 .stat{background:var(--ink2);border:1px solid rgba(201,164,92,.2);border-radius:var(--radius);padding:12px;text-align:center}
 .stat .n{font-family:var(--displaysc);font-size:26px;color:var(--brass)}
@@ -305,7 +342,7 @@ canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgb
     <button class="quick" onclick="go('p-breathe')"><div class="qt">Breathe</div><div class="qd">The monocle expands. So do your lungs.</div></button>
     <button class="quick" onclick="go('p-ground')"><div class="qt">Ground</div><div class="qd">5-4-3-2-1, pelvic floor, PMR, cold water.</div></button>
     <button class="quick" onclick="go('p-defuse')"><div class="qt">Defuse</div><div class="qd">Leaves on a stream & friends.</div></button>
-    <button class="quick" onclick="go('p-track')"><div class="qt">Log It</div><div class="qd">Rate the dread. Track the drop.</div></button>
+    <button class="quick" onclick="go('p-track')"><div class="qt">Log It</div><div class="qd">Rate today. Log your meds.</div></button>
   </div>
 
   <div class="crisis">
@@ -337,6 +374,7 @@ canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgb
     <div class="slider-row"><label for="sOut">Exhale</label><input type="range" id="sOut" min="2" max="12" step="0.5" value="4"><span class="val" id="vOut">4s</span></div>
     <div class="slider-row"><label for="sH2">Hold (bottom)</label><input type="range" id="sH2" min="0" max="10" step="0.5" value="4"><span class="val" id="vH2">4s</span></div>
     <div class="slider-row"><label for="sCyc">Cycles</label><input type="range" id="sCyc" min="3" max="30" step="1" value="10"><span class="val" id="vCyc">10</span></div>
+    <label class="check-row"><input type="checkbox" id="breathVoice"> Speak the cues out loud (inhale, hold, exhale)</label>
   </div>
 </section>
 
@@ -376,7 +414,6 @@ canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgb
     <p style="font-size:14px;margin:6px 0">Cold water on the face or wrists, or an ice cube in the hand, triggers the dive reflex and slows heart rate within ~30 seconds. Hold 15–30s while breathing out slowly. <span style="color:var(--bone-dim)">(Check with your doctor first if you have a heart condition.)</span></p>
   </div>
 
-  <div id="playerHost"></div>
 </section>
 
 <!-- ============ DEFUSE ============ -->
@@ -423,55 +460,91 @@ canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgb
   <h2>Track</h2>
   <div class="sub">Measurement-based care for an audience of one.</div>
 
-  <div class="card" id="newEntryCard">
-    <h3 id="entryTitle">New check-in</h3>
-    <div id="recheckBanner" style="display:none;font-size:13px;color:var(--fog);margin:4px 0 8px"></div>
+  <div class="seg" role="tablist" aria-label="Tracking views">
+    <button role="tab" id="tab-daily" aria-controls="view-daily" aria-selected="true" onclick="setTrackView('daily')">Daily log</button>
+    <button role="tab" id="tab-meds" aria-controls="view-meds" aria-selected="false" tabindex="-1" onclick="setTrackView('meds')">Medications</button>
+  </div>
 
-    <label class="f">What's going on?</label>
-    <textarea id="fSituation" placeholder="Where are you, what's happening, what triggered it..."></textarea>
+  <!-- ----- daily log ----- -->
+  <div id="view-daily" role="tabpanel" aria-labelledby="tab-daily">
+    <div class="card">
+      <h3 id="dayTitle">Today</h3>
+      <p class="hint" id="dayHint">One entry per day. Saving again updates that day.</p>
 
-    <label class="f">Thoughts</label>
-    <textarea id="fThoughts" placeholder="What is the brain broadcasting..."></textarea>
+      <label class="f" for="fDate">Date</label>
+      <input type="date" id="fDate">
 
-    <label class="f">Emotions</label>
-    <div class="emochips" id="emoChips"></div>
+      <fieldset style="border:none">
+        <legend class="f" style="margin-bottom:4px">How was the day? (0 to 10)</legend>
+        <div class="rate"><div class="rl"><label for="rAnx">Anxiety</label><b id="rAnxV" aria-hidden="true">0</b></div><input type="range" id="rAnx" min="0" max="10" value="0"></div>
+        <div class="rate"><div class="rl"><label for="rPan">Panic</label><b id="rPanV" aria-hidden="true">0</b></div><input type="range" id="rPan" min="0" max="10" value="0"></div>
+        <div class="rate"><div class="rl"><label for="rDep">Depression</label><b id="rDepV" aria-hidden="true">0</b></div><input type="range" id="rDep" min="0" max="10" value="0"></div>
+        <div class="rate"><div class="rl"><label for="rStr">Stress</label><b id="rStrV" aria-hidden="true">0</b></div><input type="range" id="rStr" min="0" max="10" value="0"></div>
+      </fieldset>
 
-    <label class="f">Ratings (0–10)</label>
-    <div class="rate"><div class="rl"><span>Anxiety</span><b id="rAnxV">5</b></div><input type="range" id="rAnx" min="0" max="10" value="5"></div>
-    <div class="rate"><div class="rl"><span>Panic</span><b id="rPanV">0</b></div><input type="range" id="rPan" min="0" max="10" value="0"></div>
-    <div class="rate"><div class="rl"><span>Depression</span><b id="rDepV">0</b></div><input type="range" id="rDep" min="0" max="10" value="0"></div>
-    <div class="rate"><div class="rl"><span>Stress</span><b id="rStrV">5</b></div><input type="range" id="rStr" min="0" max="10" value="5"></div>
+      <div class="f" id="emoLbl">Emotions</div>
+      <div class="emochips" id="emoChips" role="group" aria-labelledby="emoLbl"></div>
 
-    <div id="skillUsedWrap" style="display:none">
-      <label class="f">Skill used</label>
-      <select id="fSkillUsed">
-        <option>Breathing</option><option>5-4-3-2-1</option><option>Pelvic floor drop</option>
-        <option>PMR</option><option>Cold anchor</option><option>Leaves on a stream</option>
-        <option>Passengers on the bus</option><option>Defusion (quick)</option>
-        <option>TIPP</option><option>STOP</option><option>ACCEPTS</option><option>Self-soothe</option>
-        <option>Radical acceptance</option><option>Opposite action</option><option>Check the facts</option>
-        <option>Other</option>
-      </select>
+      <div class="f" id="skillLbl">Skills used</div>
+      <div class="emochips" id="skillChips" role="group" aria-labelledby="skillLbl"></div>
+
+      <label class="f" for="fNotes">Notes</label>
+      <textarea id="fNotes" placeholder="What happened today, what helped, what didn't..."></textarea>
+
+      <button class="btn block" id="saveDayBtn" onclick="saveDay()">Save day</button>
     </div>
 
-    <button class="btn block" onclick="saveEntry()">Save check-in</button>
-    <button class="btn block ghost" id="cancelRecheck" style="display:none" onclick="cancelRecheck()">Cancel re-check</button>
+    <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">The graph of dread</h3>
+    <div class="preset-row" id="metricRow" role="group" aria-label="Rating to show"></div>
+    <div class="preset-row" id="dayRangeRow" role="group" aria-label="Time range"></div>
+    <div class="chart-wrap" id="dayChart"></div>
+
+    <div class="stat-grid" id="statGrid"></div>
+
+    <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">History</h3>
+    <div id="historyHost"></div>
   </div>
 
-  <div class="card" id="pendingCard" style="display:none">
-    <h3>Open loop</h3>
-    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px" id="pendingText"></p>
-    <button class="btn small calm" onclick="beginRecheck()">Re-check now</button>
+  <!-- ----- medications ----- -->
+  <div id="view-meds" role="tabpanel" aria-labelledby="tab-meds" hidden>
+    <div class="card">
+      <h3>Log a dose</h3>
+      <div id="medQuick" class="preset-row" style="margin-top:8px" role="group" aria-label="Fill from a medication you've logged before"></div>
+
+      <label class="f" for="mName">Medication</label>
+      <input type="text" id="mName" list="medNames" autocomplete="off" placeholder="e.g. sertraline">
+      <datalist id="medNames"></datalist>
+
+      <div class="field-row">
+        <div>
+          <label class="f" for="mDose">Dose</label>
+          <input type="number" id="mDose" min="0" step="any" inputmode="decimal" placeholder="50">
+        </div>
+        <div>
+          <label class="f" for="mUnit">Unit</label>
+          <select id="mUnit">
+            <option>mg</option><option>mcg</option><option>mL</option><option>g</option><option>units</option><option>tablet(s)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div><label class="f" for="mDate">Date</label><input type="date" id="mDate"></div>
+        <div><label class="f" for="mTime">Time</label><input type="time" id="mTime"></div>
+      </div>
+
+      <button class="btn block" onclick="saveDose()">Log dose</button>
+    </div>
+
+    <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">Dose graph</h3>
+    <div class="preset-row" id="medPickRow" role="group" aria-label="Medication to show"></div>
+    <div class="preset-row" id="medModeRow" role="group" aria-label="What to plot"></div>
+    <div class="preset-row" id="medRangeRow" role="group" aria-label="Time range"></div>
+    <div class="chart-wrap" id="medChart"></div>
+
+    <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">Dose history</h3>
+    <div id="medHistory"></div>
   </div>
-
-  <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">The graph of dread</h3>
-  <div class="preset-row" id="metricRow"></div>
-  <canvas id="chart" width="640" height="220"></canvas>
-
-  <div class="stat-grid" id="statGrid"></div>
-
-  <h3 style="font-family:var(--display);margin:18px 0 8px;color:var(--brass)">History</h3>
-  <div id="historyHost"></div>
 </section>
 
 <!-- ============ PERSPECTIVE ============ -->
@@ -490,19 +563,31 @@ canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgb
 <!-- ============ DATA ============ -->
 <section class="panel" id="p-data">
   <h2>Data</h2>
-  <div class="sub">Your dread, portable.</div>
+  <div class="sub">Your dread, portable. Plus the narrator's settings.</div>
+  <div class="card">
+    <h3>Narration</h3>
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px" id="voiceSupport">The guided exercises and the panic protocol read themselves out loud using your device's built-in voice.</p>
+    <label class="check-row"><input type="checkbox" id="voiceOn" checked> Read guided exercises out loud</label>
+    <label class="f" for="voicePick">Voice</label>
+    <select id="voicePick"><option value="">Device default</option></select>
+    <div class="slider-row"><label for="voiceRate">Speed</label><input type="range" id="voiceRate" min="0.6" max="1.3" step="0.05" value="0.9"><span class="val" id="voiceRateV">0.9</span></div>
+    <button class="btn small ghost" onclick="testVoice()">Test voice</button>
+    <p class="hint" style="margin-top:10px">No sound? Check the ringer or silent switch and your media volume. On iPhone the silent switch mutes narration.</p>
+  </div>
   <div class="card">
     <h3>Export</h3>
     <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Everything lives on this device (localStorage). Nothing is sent anywhere.</p>
     <div class="row">
-      <button class="btn small" onclick="exportJSON()">Export JSON</button>
-      <button class="btn small" onclick="exportCSV()">Export CSV</button>
+      <button class="btn small" onclick="exportJSON()">Export all (JSON)</button>
+      <button class="btn small" onclick="exportCSV()">Daily log (CSV)</button>
+      <button class="btn small" onclick="exportMedCSV()">Medications (CSV)</button>
     </div>
   </div>
   <div class="card">
     <h3>Import</h3>
-    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Restore from a previously exported JSON file.</p>
-    <input type="file" id="importFile" accept=".json" style="color:var(--bone-dim);font-size:13px">
+    <p style="font-size:14px;color:var(--bone-dim);margin:6px 0 10px">Restore from a previously exported JSON file. Merges with what's here.</p>
+    <label class="sr-only" for="importFile">Choose export file</label>
+    <input type="file" id="importFile" accept=".json,application/json" style="color:var(--bone-dim);font-size:13px">
     <button class="btn small ghost" onclick="importJSON()">Import</button>
   </div>
   <div class="card">
@@ -515,13 +600,33 @@ canvas#chart{width:100%;height:220px;background:var(--ink2);border:1px solid rgb
 </main>
 
 <!-- ============ SOS overlay ============ -->
-<div id="sosOverlay" role="dialog" aria-modal="true">
+<div id="sosOverlay" role="dialog" aria-modal="true" aria-labelledby="sosPhase">
   <div class="big" id="sosPhase">PANIC PROTOCOL</div>
   <div class="monocle" id="sosMonocle" style="margin:18px 0"><span class="breath-word" id="sosWord"></span></div>
   <div class="txt" id="sosText"></div>
   <div class="row" style="margin-top:22px;justify-content:center">
-    <button class="btn ghost small" onclick="sosNext()" id="sosNextBtn" style="display:none">Next</button>
+    <button class="btn ghost small" onclick="sosNext()" id="sosNextBtn">Next</button>
     <button class="btn danger small" onclick="endSOS()">Exit</button>
+  </div>
+</div>
+
+<!-- ============ guided player overlay ============ -->
+<div id="playerOverlay" role="dialog" aria-modal="true" aria-labelledby="plTitle">
+  <div class="player">
+    <div class="ptitle" id="plTitle"></div>
+    <div class="script" id="plScript"></div>
+    <div class="prog" aria-hidden="true"><i id="plProg"></i></div>
+    <div class="ctr">
+      <span class="stepnum" id="plStep"></span>
+      <span class="row">
+        <button class="btn small ghost" id="plBack" onclick="prevStep()" aria-label="Previous step">Back</button>
+        <button class="btn small ghost" id="plPause" onclick="pausePlayer()">Pause</button>
+        <button class="btn small ghost" onclick="nextStep()" aria-label="Next step">Skip</button>
+        <button class="btn small ghost" id="plVoice" onclick="toggleVoice()" aria-pressed="true">Voice on</button>
+        <button class="btn small danger" onclick="stopPlayer()">End</button>
+      </span>
+    </div>
+    <div class="voice-note" id="plNote" role="status"></div>
   </div>
 </div>
 
@@ -553,6 +658,9 @@ const Store = (() => {
 })();
 const KEY = 'kyh_entries_v1';
 const KEY_PENDING = 'kyh_pending_v1';
+const KEY_DAILY = 'kyh_daily_v2';
+const KEY_MEDS = 'kyh_meds_v1';
+const KEY_VOICE = 'kyh_voice_v1';
 
 function toast(msg){
   const t = document.getElementById('toast');
@@ -612,16 +720,19 @@ function setSlider(id, val){
 }
 function toggleBreath(){
   if (breathing){ stopBreath(); return; }
+  stopPlayer();
   breathing = true;
   document.getElementById('breathBtn').textContent = 'Stop';
   cyclesLeft = parseInt(document.getElementById('sCyc').value, 10);
   runCycle(document.getElementById('monocle'), document.getElementById('breathWord'), document.getElementById('breathCount'), ()=>{
-    stopBreath(); toast('Cycle complete. Consider a re-check in Track.');
+    stopBreath(); toast('Cycles complete. Log it in Track if it helped.');
   });
 }
 function stopBreath(){
+  const was = breathing;
   breathing = false;
   clearTimeout(breathTimer);
+  if (was) Narrator.stop();
   document.getElementById('breathBtn').textContent = 'Begin';
   const m = document.getElementById('monocle');
   m.style.transition = 'transform .6s ease'; m.style.transform = 'scale(1)';
@@ -650,6 +761,7 @@ function runCycle(monocle, wordEl, countEl, done){
     }
     const p = phases[pi];
     wordEl.textContent = p.w;
+    if (monocle.id==='monocle' && document.getElementById('breathVoice').checked) Narrator.speak(p.w, null, {force:true});
     if (countEl) countEl.textContent = cyclesLeft + (cyclesLeft===1?' cycle left':' cycles left');
     monocle.style.transition = 'transform ' + p.t + 's ' + (p.w==='hold' ? 'linear' : 'cubic-bezier(.4,0,.4,1)');
     monocle.style.transform = 'scale(' + p.s + ')';
@@ -680,9 +792,9 @@ function render54321(){
   const [n, sense, prompt] = G_STEPS[gIdx];
   const left = n - gCount;
   host.innerHTML =
-    '<div style="font-family:var(--displaysc);font-size:22px;color:var(--brass);margin:8px 0 4px">' + left + ' to ' + sense + '</div>' +
+    '<div aria-live="polite" style="font-family:var(--displaysc);font-size:22px;color:var(--brass);margin:8px 0 4px">' + left + ' to ' + sense + '</div>' +
     '<p style="font-size:14.5px;margin-bottom:10px">' + prompt + '</p>' +
-    '<input type="text" id="gInput" placeholder="name it (or just tap Got one)">' +
+    '<input type="text" id="gInput" aria-label="Name it (optional)" placeholder="name it (or just tap Got one)">' +
     '<button class="btn small calm" onclick="tally54321()">Got one</button>';
   const inp = document.getElementById('gInput');
   inp.addEventListener('keydown', e=>{ if(e.key==='Enter') tally54321(); });
@@ -691,6 +803,7 @@ function tally54321(){
   gCount++;
   if (gCount >= G_STEPS[gIdx][0]){ gIdx++; gCount = 0; }
   render54321();
+  const inp = document.getElementById('gInput'); if (inp) inp.focus();
 }
 
 /* ================= guided players ================= */
@@ -760,58 +873,214 @@ const SCRIPTS = {
     ]
   }
 };
-let player = { timer:null, script:null, idx:0, paused:false };
+/* ================= narration (Web Speech API) ================= */
+const Narrator = (() => {
+  const synth = window.speechSynthesis;
+  const supported = !!(synth && window.SpeechSynthesisUtterance);
+  const cfg = Object.assign({on:true, rate:0.9, voice:''}, Store.get(KEY_VOICE, {}));
+  let token = 0, keep = [];
+  function voices(){ try { return supported ? synth.getVoices() : []; } catch(e){ return []; } }
+  function pick(){
+    const vs = voices();
+    if (cfg.voice){ const v = vs.find(x=>x.voiceURI===cfg.voice); if (v) return v; }
+    const en = vs.filter(v=>/^en/i.test(v.lang));
+    const pref = ['Samantha','Ava','Allison','Karen','Daniel','Moira','Google US English','Google UK English Female','Microsoft Aria','Microsoft Jenny','Microsoft Zira'];
+    for (const n of pref){ const v = en.find(x=>x.name.indexOf(n)===0); if (v) return v; }
+    return en.find(v=>v.default) || en.find(v=>v.localService) || en[0] || null;
+  }
+  // Sentence-sized pieces: Chrome silently stops long utterances after ~15s.
+  function chunks(text){
+    const t = text.replace(/\s+/g,' ').trim();
+    return (t.match(/[^.!?]+[.!?]+["'”’)]*|[^.!?]+$/g) || [t]).map(x=>x.trim()).filter(Boolean);
+  }
+  function stop(){
+    token++; keep = [];
+    if (supported){ try { synth.cancel(); } catch(e){} }
+  }
+  // speak(text, onDone, {force}) — onDone fires once, only if not interrupted.
+  function speak(text, onDone, opts){
+    const force = opts && opts.force;
+    if (!supported || !(cfg.on || force)){
+      stop();
+      if (onDone) onDone();
+      return;
+    }
+    const my = ++token;
+    keep = [];
+    if (synth.speaking || synth.pending) synth.cancel();
+    if (synth.paused) synth.resume();
+    const parts = chunks(text);
+    const v = pick();
+    let i = 0;
+    const next = ()=>{
+      if (my !== token) return;
+      if (i >= parts.length){ keep = []; if (onDone) onDone(); return; }
+      const u = new SpeechSynthesisUtterance(parts[i++]);
+      if (v){ u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+      u.rate = cfg.rate;
+      let fired = false, guard = null;
+      const fin = ()=>{ if (fired) return; fired = true; clearTimeout(guard); next(); };
+      u.onend = fin; u.onerror = fin;
+      // Watchdog: some browsers never fire onend.
+      guard = setTimeout(fin, (u.text.length * 95 / cfg.rate) + 4000);
+      keep.push(u);
+      synth.speak(u);
+    };
+    next();
+  }
+  function setCfg(k, v){ cfg[k] = v; Store.set(KEY_VOICE, cfg); }
+  return { supported, cfg, speak, stop, voices, setCfg };
+})();
+
+function initVoiceSettings(){
+  const on = document.getElementById('voiceOn');
+  const pickEl = document.getElementById('voicePick');
+  const rate = document.getElementById('voiceRate');
+  if (!Narrator.supported){
+    document.getElementById('voiceSupport').textContent = "This browser doesn't support spoken narration. The exercises still run as on-screen text that advances by itself. Safari, Chrome, and Edge all support it.";
+    [on, pickEl, rate].forEach(el=>el.disabled = true);
+    return;
+  }
+  on.checked = Narrator.cfg.on;
+  on.addEventListener('change', ()=>{ Narrator.setCfg('on', on.checked); updateVoiceBtn(); });
+  rate.value = Narrator.cfg.rate;
+  document.getElementById('voiceRateV').textContent = Narrator.cfg.rate;
+  rate.addEventListener('input', ()=>{
+    Narrator.setCfg('rate', parseFloat(rate.value));
+    document.getElementById('voiceRateV').textContent = rate.value;
+  });
+  const fill = ()=>{
+    const vs = Narrator.voices().filter(v=>/^en/i.test(v.lang));
+    pickEl.innerHTML = '';
+    const d = document.createElement('option'); d.value = ''; d.textContent = 'Automatic (best available)';
+    pickEl.appendChild(d);
+    vs.forEach(v=>{
+      const o = document.createElement('option');
+      o.value = v.voiceURI; o.textContent = v.name + ' (' + v.lang + ')';
+      pickEl.appendChild(o);
+    });
+    pickEl.value = Narrator.voices().some(v=>v.voiceURI===Narrator.cfg.voice) ? Narrator.cfg.voice : '';
+  };
+  fill();
+  if ('onvoiceschanged' in speechSynthesis) speechSynthesis.addEventListener('voiceschanged', fill);
+  pickEl.addEventListener('change', ()=>Narrator.setCfg('voice', pickEl.value));
+}
+function testVoice(){
+  Narrator.speak('This is your narrator. Unclench your jaw.', null, {force:true});
+}
+
+/* ================= guided player ================= */
+const player = { script:null, idx:0, paused:false, timers:[], token:0, lastFocus:null };
+function clearPlayerTimers(){ player.timers.forEach(clearTimeout); player.timers = []; }
 function startPlayer(key){
+  stopBreath();
   stopPlayer();
   const sc = SCRIPTS[key];
-  player = { timer:null, script:sc, idx:0, paused:false };
-  const host = document.getElementById('playerHost');
-  host.innerHTML =
-    '<div class="player" id="thePlayer">' +
-      '<div class="meta" style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog)">' + sc.title + '</div>' +
-      '<div class="script" id="plScript"></div>' +
-      '<div class="prog"><i id="plProg"></i></div>' +
-      '<div class="ctr">' +
-        '<span class="stepnum" id="plStep"></span>' +
-        '<span>' +
-          '<button class="btn small ghost" id="plPause" onclick="pausePlayer()">Pause</button> ' +
-          '<button class="btn small ghost" onclick="nextStep()">Skip</button> ' +
-          '<button class="btn small danger" onclick="stopPlayer(true)">End</button>' +
-        '</span>' +
-      '</div>' +
-    '</div>';
-  host.scrollIntoView({behavior:'smooth', block:'center'});
-  showStep();
+  player.script = sc; player.idx = 0; player.paused = false;
+  player.lastFocus = document.activeElement;
+  document.getElementById('plTitle').textContent = sc.title;
+  document.getElementById('plPause').textContent = 'Pause';
+  document.getElementById('plPause').disabled = false;
+  document.getElementById('playerOverlay').classList.add('open');
+  updateVoiceBtn();
+  showStep(); // speak synchronously inside the tap so iOS allows audio
+  document.getElementById('plPause').focus();
+}
+function updateVoiceBtn(){
+  const b = document.getElementById('plVoice');
+  const note = document.getElementById('plNote');
+  const script = document.getElementById('plScript');
+  if (!Narrator.supported){
+    b.style.display = 'none';
+    note.textContent = "Narration isn't supported in this browser. The text advances on its own.";
+    script.setAttribute('aria-live','polite');
+    return;
+  }
+  b.textContent = Narrator.cfg.on ? 'Voice on' : 'Voice off';
+  b.setAttribute('aria-pressed', Narrator.cfg.on ? 'true' : 'false');
+  note.textContent = Narrator.cfg.on ? '' : 'Voice is off. The text advances on its own.';
+  // Screen readers announce new text only when the narrator isn't already speaking it.
+  if (Narrator.cfg.on) script.removeAttribute('aria-live'); else script.setAttribute('aria-live','polite');
+  const vo = document.getElementById('voiceOn'); if (vo) vo.checked = Narrator.cfg.on;
+}
+function toggleVoice(){
+  Narrator.setCfg('on', !Narrator.cfg.on);
+  updateVoiceBtn();
+  if (player.script && !player.paused) showStep(); else Narrator.stop();
 }
 function showStep(){
   const sc = player.script;
   if (!sc) return;
+  clearPlayerTimers();
+  const my = ++player.token;
+  const el = document.getElementById('plScript');
   if (player.idx >= sc.steps.length){
-    document.getElementById('plScript').textContent = 'Done. Consider a quick re-check in Track to log whether the numbers moved.';
+    const done = "Done. If it helped, add it to today's log in Track.";
+    el.textContent = done;
     document.getElementById('plStep').textContent = 'complete';
     document.getElementById('plProg').style.width = '100%';
+    document.getElementById('plPause').disabled = true;
+    Narrator.speak(done);
     return;
   }
+  document.getElementById('plPause').disabled = false;
   const [text, secs] = sc.steps[player.idx];
-  const el = document.getElementById('plScript');
   el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
   el.textContent = text;
-  document.getElementById('plStep').textContent = (player.idx+1) + ' / ' + sc.steps.length;
-  document.getElementById('plProg').style.width = ((player.idx) / sc.steps.length * 100) + '%';
-  clearTimeout(player.timer);
-  if (!player.paused) player.timer = setTimeout(nextStep, secs * 1000);
+  document.getElementById('plStep').textContent = 'Step ' + (player.idx+1) + ' of ' + sc.steps.length;
+  document.getElementById('plProg').style.width = (player.idx / sc.steps.length * 100) + '%';
+  if (player.paused){ Narrator.stop(); return; }
+  // Advance when the step's minimum time has passed AND the narrator has finished.
+  let minDone = false, spoke = false;
+  const maybe = ()=>{ if (my === player.token && minDone && spoke) nextStep(); };
+  player.timers.push(setTimeout(()=>{ minDone = true; maybe(); }, secs * 1000));
+  Narrator.speak(text, ()=>{
+    if (my !== player.token) return;
+    player.timers.push(setTimeout(()=>{ spoke = true; maybe(); }, 1500));
+  });
 }
-function nextStep(){ if(!player.script) return; player.idx++; showStep(); }
+function nextStep(){
+  if (!player.script || player.idx >= player.script.steps.length) return;
+  player.idx++; showStep();
+}
+function prevStep(){
+  if (!player.script) return;
+  player.idx = Math.max(0, Math.min(player.idx, player.script.steps.length) - 1);
+  showStep();
+}
 function pausePlayer(){
+  if (!player.script) return;
   player.paused = !player.paused;
   document.getElementById('plPause').textContent = player.paused ? 'Resume' : 'Pause';
-  if (player.paused) clearTimeout(player.timer); else showStep();
+  if (player.paused){ clearPlayerTimers(); player.token++; Narrator.stop(); }
+  else showStep();
 }
-function stopPlayer(clear){
-  clearTimeout(player.timer);
+function stopPlayer(){
+  const wasOpen = !!player.script;
+  clearPlayerTimers(); player.token++;
   player.script = null;
-  if (clear) document.getElementById('playerHost').innerHTML = '';
+  Narrator.stop();
+  document.getElementById('playerOverlay').classList.remove('open');
+  if (wasOpen && player.lastFocus && player.lastFocus.focus) player.lastFocus.focus();
 }
+function trapFocus(container, e){
+  const f = [...container.querySelectorAll('button:not([disabled])')].filter(b=>b.offsetParent!==null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length-1];
+  if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+}
+document.addEventListener('keydown', e=>{
+  const pl = document.getElementById('playerOverlay');
+  const sos = document.getElementById('sosOverlay');
+  if (pl.classList.contains('open')){
+    if (e.key === 'Escape') stopPlayer();
+    else if (e.key === 'Tab') trapFocus(pl, e);
+  } else if (sos.classList.contains('open')){
+    if (e.key === 'Escape') endSOS();
+    else if (e.key === 'Tab') trapFocus(sos, e);
+  }
+});
 
 /* ================= SKILLS content ================= */
 const SKILLS = [
@@ -913,187 +1182,444 @@ function initSkills(){
   });
 }
 
-/* ================= TRACKING ================= */
+/* ================= TRACKING: shared helpers ================= */
 const EMOTIONS = ['anxious','panicked','dread','overwhelmed','irritable','sad','numb','ashamed','restless','exhausted','hopeless','wired','okay-ish'];
-let selectedEmos = new Set();
-let recheckTarget = null;
-let chartMetric = 'anxiety';
+const SKILL_NAMES = ['Breathing','5-4-3-2-1','Pelvic floor drop','PMR','Cold anchor','Leaves on a stream','Passengers on the bus','Quick defusion','Panic protocol','TIPP','STOP','ACCEPTS','Self-soothe','Radical acceptance','Opposite action','Check the facts'];
+const METRICS = [['anxiety','Anxiety'],['panic','Panic'],['depression','Depression'],['stress','Stress']];
+const DAY_MS = 86400000;
+let chartMetric = 'anxiety', dayRange = 30, medRange = 30, medMode = 'each', medPick = null;
+let selEmos = new Set(), selSkills = new Set(), loadedDay = null;
 
-function initTrack(){
-  const host = document.getElementById('emoChips');
-  EMOTIONS.forEach(e=>{
+function pad2(n){ return String(n).padStart(2,'0'); }
+function ymd(d){ return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
+function todayStr(){ return ymd(new Date()); }
+function nowTime(){ const d = new Date(); return pad2(d.getHours()) + ':' + pad2(d.getMinutes()); }
+function parseYMD(s){ const [y,m,d] = s.split('-').map(Number); return new Date(y, m-1, d); }
+function fmtDay(s, long){
+  return parseYMD(s).toLocaleDateString(undefined, long ? {weekday:'long', month:'long', day:'numeric', year:'numeric'} : {weekday:'short', month:'short', day:'numeric'});
+}
+function fmtClock(t){
+  const [h,m] = t.split(':').map(Number);
+  return new Date(2000,0,1,h,m).toLocaleTimeString(undefined,{hour:'numeric', minute:'2-digit'});
+}
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function rangeStart(n){ const d = parseYMD(todayStr()); d.setDate(d.getDate() - (n-1)); return d.getTime(); }
+function endOfToday(){ return parseYMD(todayStr()).getTime() + DAY_MS - 1; }
+
+function chipRow(hostId, items, current, onPick){
+  const host = document.getElementById(hostId);
+  host.innerHTML = '';
+  items.forEach(([val,label])=>{
     const b = document.createElement('button');
-    b.className = 'chip'; b.textContent = e; b.type = 'button';
-    b.onclick = ()=>{ b.classList.toggle('on'); b.classList.contains('on') ? selectedEmos.add(e) : selectedEmos.delete(e); };
+    b.type = 'button'; b.className = 'chip' + (val===current ? ' on' : '');
+    b.textContent = label;
+    b.setAttribute('aria-pressed', val===current ? 'true' : 'false');
+    b.onclick = ()=>onPick(val);
     host.appendChild(b);
   });
-  [['rAnx','rAnxV'],['rPan','rPanV'],['rDep','rDepV'],['rStr','rStrV']].forEach(([r,v])=>{
-    const el = document.getElementById(r);
-    el.addEventListener('input', ()=>document.getElementById(v).textContent = el.value);
-  });
-  const mrow = document.getElementById('metricRow');
-  [['anxiety','Anxiety'],['panic','Panic'],['depression','Depression'],['stress','Stress']].forEach(([k,l],i)=>{
+}
+function toggleChips(hostId, names, set){
+  const host = document.getElementById(hostId);
+  host.innerHTML = '';
+  names.forEach(n=>{
     const b = document.createElement('button');
-    b.className = 'chip' + (i===0?' on':''); b.textContent = l;
-    b.onclick = ()=>{ chartMetric = k; document.querySelectorAll('#metricRow .chip').forEach(c=>c.classList.remove('on')); b.classList.add('on'); drawChart(); };
-    mrow.appendChild(b);
+    b.type = 'button'; b.className = 'chip' + (set.has(n) ? ' on' : '');
+    b.textContent = n;
+    b.setAttribute('aria-pressed', set.has(n) ? 'true' : 'false');
+    b.onclick = ()=>{
+      set.has(n) ? set.delete(n) : set.add(n);
+      b.classList.toggle('on', set.has(n));
+      b.setAttribute('aria-pressed', set.has(n) ? 'true' : 'false');
+    };
+    host.appendChild(b);
   });
 }
-function entries(){ return Store.get(KEY, []); }
-function saveEntries(list){ Store.set(KEY, list); }
+function union(base, extra){ return base.concat((extra||[]).filter(x=>!base.includes(x))); }
 
-function saveEntry(){
-  const e = {
-    id: Date.now(),
-    ts: new Date().toISOString(),
-    situation: document.getElementById('fSituation').value.trim(),
-    thoughts: document.getElementById('fThoughts').value.trim(),
-    emotions: [...selectedEmos],
+/* ================= line chart (SVG, single series) ================= */
+// pts: [{x:ms, y:number, when:string, val:string}] sorted by x
+function lineChart(hostId, pts, o){
+  const host = document.getElementById(hostId);
+  host.innerHTML = '';
+  if (!pts.length){
+    const p = document.createElement('div'); p.className = 'chart-empty'; p.textContent = o.empty;
+    host.appendChild(p); return;
+  }
+  const NS = 'http://www.w3.org/2000/svg';
+  const W = Math.max(280, host.clientWidth - 8 || 600), H = 230;
+  const pad = {l:40, r:16, t:14, b:30};
+  const iw = W - pad.l - pad.r, ih = H - pad.t - pad.b;
+  const xMin = o.xMin, xMax = Math.max(o.xMax, o.xMin + DAY_MS);
+  const X = x => pad.l + iw * (x - xMin) / (xMax - xMin);
+  const Y = y => pad.t + ih * (1 - y / o.yMax);
+  const el = (tag, attrs, parent)=>{ const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); (parent||svg).appendChild(n); return n; };
+  const svg = document.createElementNS(NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('tabindex', '0');
+  svg.setAttribute('aria-label', o.summary + ' Use left and right arrow keys to read each point.');
+  // grid + y labels
+  o.yTicks.forEach(v=>{
+    el('line', {x1:pad.l, x2:W-pad.r, y1:Y(v), y2:Y(v), stroke:'rgba(201,164,92,.14)', 'stroke-width':1});
+    const t = el('text', {x:pad.l-8, y:Y(v)+4, 'text-anchor':'end', fill:'#8FA3B0', 'font-size':11, 'font-family':'monospace'});
+    t.textContent = o.yFmt ? o.yFmt(v) : v;
+  });
+  // x labels: evenly spaced dates
+  const nx = Math.max(2, Math.min(6, Math.floor(iw / 90)));
+  for (let i=0; i<nx; i++){
+    const x = xMin + (xMax - xMin) * i / (nx-1);
+    const t = el('text', {x:X(x), y:H-10, 'text-anchor': i===0 ? 'start' : i===nx-1 ? 'end' : 'middle', fill:'#8FA3B0', 'font-size':11});
+    t.textContent = new Date(x).toLocaleDateString(undefined, {month:'short', day:'numeric'});
+  }
+  // line + points
+  if (pts.length > 1){
+    el('polyline', {points: pts.map(p=>X(p.x).toFixed(1) + ',' + Y(p.y).toFixed(1)).join(' '), fill:'none', stroke:o.color, 'stroke-width':2, 'stroke-linejoin':'round', 'stroke-linecap':'round'});
+  }
+  pts.forEach(p=> el('circle', {cx:X(p.x), cy:Y(p.y), r:4.5, fill:o.color, stroke:'#1E1830', 'stroke-width':2}));
+  // hover / focus layer
+  const cross = el('line', {y1:pad.t, y2:H-pad.b, stroke:'rgba(237,228,208,.35)', 'stroke-width':1, visibility:'hidden'});
+  const ring = el('circle', {r:7, fill:'none', stroke:'#EDE4D0', 'stroke-width':2, visibility:'hidden'});
+  host.appendChild(svg);
+  const tip = document.createElement('div'); tip.className = 'chart-tip';
+  const tb = document.createElement('b'); const ts = document.createElement('span');
+  tip.appendChild(tb); tip.appendChild(ts); host.appendChild(tip);
+  let cur = -1;
+  const show = i=>{
+    cur = i; const p = pts[i];
+    const cx = X(p.x), cy = Y(p.y);
+    cross.setAttribute('x1', cx); cross.setAttribute('x2', cx); cross.setAttribute('visibility','visible');
+    ring.setAttribute('cx', cx); ring.setAttribute('cy', cy); ring.setAttribute('visibility','visible');
+    tb.textContent = p.val; ts.textContent = p.when;
+    tip.style.display = 'block';
+    const scale = svg.getBoundingClientRect().width / W;
+    const left = cx * scale + 4, tw = tip.offsetWidth;
+    tip.style.left = Math.max(4, Math.min(left - tw/2, host.clientWidth - tw - 4)) + 'px';
+    tip.style.top = Math.max(2, cy * scale - 52) + 'px';
+  };
+  const hide = ()=>{ cur = -1; tip.style.display = 'none'; cross.setAttribute('visibility','hidden'); ring.setAttribute('visibility','hidden'); };
+  svg.addEventListener('pointermove', e=>{
+    const r = svg.getBoundingClientRect();
+    const mx = (e.clientX - r.left) * W / r.width;
+    let best = 0, bd = Infinity;
+    pts.forEach((p,i)=>{ const d = Math.abs(X(p.x) - mx); if (d < bd){ bd = d; best = i; } });
+    show(best);
+  });
+  svg.addEventListener('pointerleave', hide);
+  svg.addEventListener('blur', hide);
+  svg.addEventListener('keydown', e=>{
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+      e.preventDefault();
+      const n = cur < 0 ? (e.key === 'ArrowRight' ? 0 : pts.length-1) : Math.max(0, Math.min(pts.length-1, cur + (e.key === 'ArrowRight' ? 1 : -1)));
+      show(n);
+    } else if (e.key === 'Escape') hide();
+  });
+}
+function niceMax(v){
+  if (!(v > 0)) return 1;
+  const raw = v * 1.15, mag = Math.pow(10, Math.floor(Math.log10(raw)));
+  const n = raw / mag;
+  return [1,1.2,1.6,2,2.4,3,4,5,6,8,10].find(x=>n <= x + 1e-9) * mag;
+}
+function fmtNum(v){ return Math.round(v * 100) / 100 + ''; }
+
+/* ================= DAILY LOG ================= */
+function days(){ return Store.get(KEY_DAILY, []); }
+function saveDays(list){ list.sort((a,b)=> a.date < b.date ? -1 : a.date > b.date ? 1 : 0); Store.set(KEY_DAILY, list); }
+
+// v1 stored minute-level check-ins. Fold them into one entry per day (latest ratings win).
+function convertV1(old){
+  const by = {};
+  (old||[]).filter(e=>e && e.ts).slice().sort((a,b)=> new Date(a.ts) - new Date(b.ts)).forEach(e=>{
+    const date = ymd(new Date(e.ts));
+    const d = by[date] || (by[date] = {date, emotions:[], skills:[], notes:''});
+    METRICS.forEach(([k])=> d[k] = +e[k] || 0);
+    (e.emotions||[]).forEach(x=>{ if (!d.emotions.includes(x)) d.emotions.push(x); });
+    if (e.skill && !d.skills.includes(e.skill)) d.skills.push(e.skill);
+    const txt = [e.situation, e.thoughts].filter(Boolean).join(' / ');
+    if (txt) d.notes = d.notes ? d.notes + '\n' + txt : txt;
+    d.updated = e.ts;
+  });
+  return Object.values(by);
+}
+function migrateV1(){
+  if (Store.get(KEY_DAILY, null) !== null) return;
+  saveDays(convertV1(Store.get(KEY, [])));
+  Store.del(KEY_PENDING);
+}
+
+function initTrack(){
+  migrateV1();
+  [['rAnx','rAnxV'],['rPan','rPanV'],['rDep','rDepV'],['rStr','rStrV']].forEach(([r,v])=>{
+    const el = document.getElementById(r);
+    el.addEventListener('input', ()=>setRating(r, v, el.value));
+  });
+  const fd = document.getElementById('fDate');
+  fd.value = todayStr(); fd.max = todayStr();
+  fd.addEventListener('change', ()=>{ if (fd.value) loadDay(fd.value); });
+  const md = document.getElementById('mDate');
+  md.value = todayStr(); md.max = todayStr();
+  document.getElementById('mTime').value = nowTime();
+  document.getElementById('mName').addEventListener('change', ()=>{
+    const m = medList().find(x=>x.key === medKey(document.getElementById('mName').value));
+    if (m) document.getElementById('mUnit').value = m.unit;
+  });
+  document.querySelectorAll('.seg [role=tab]').forEach(t=>t.addEventListener('keydown', e=>{
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+      const v = document.getElementById('tab-daily').getAttribute('aria-selected') === 'true' ? 'meds' : 'daily';
+      setTrackView(v); document.getElementById('tab-' + v).focus();
+    }
+  }));
+  loadDay(todayStr());
+}
+function setRating(r, v, val){
+  const el = document.getElementById(r);
+  el.value = val;
+  el.setAttribute('aria-valuetext', val + ' out of 10');
+  document.getElementById(v).textContent = val;
+}
+function setTrackView(v){
+  ['daily','meds'].forEach(k=>{
+    const on = k === v;
+    const t = document.getElementById('tab-' + k);
+    t.setAttribute('aria-selected', on ? 'true' : 'false');
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById('view-' + k).hidden = !on;
+  });
+  if (v === 'meds'){
+    if (!document.getElementById('mDose').value) document.getElementById('mTime').value = nowTime();
+    renderMeds();
+  } else renderDaily();
+}
+function renderFormChips(){
+  const e = loadedDay;
+  toggleChips('emoChips', union(EMOTIONS, e && e.emotions), selEmos);
+  toggleChips('skillChips', union(SKILL_NAMES, e && e.skills), selSkills);
+}
+function loadDay(date){
+  const e = days().find(d=>d.date === date) || null;
+  loadedDay = e;
+  document.getElementById('fDate').value = date;
+  selEmos = new Set(e ? e.emotions : []);
+  selSkills = new Set(e ? e.skills : []);
+  renderFormChips();
+  setRating('rAnx','rAnxV', e ? e.anxiety : 0);
+  setRating('rPan','rPanV', e ? e.panic : 0);
+  setRating('rDep','rDepV', e ? e.depression : 0);
+  setRating('rStr','rStrV', e ? e.stress : 0);
+  document.getElementById('fNotes').value = e ? (e.notes || '') : '';
+  document.getElementById('dayTitle').textContent = date === todayStr() ? 'Today' : fmtDay(date, true);
+  document.getElementById('dayHint').textContent = e ? 'Already logged. Saving updates this day.' : 'One entry per day. Saving again updates that day.';
+  document.getElementById('saveDayBtn').textContent = e ? 'Update day' : 'Save day';
+}
+function saveDay(){
+  const date = document.getElementById('fDate').value;
+  if (!date){ toast('Pick a date first.'); return; }
+  if (date > todayStr()){ toast("That day hasn't happened yet."); return; }
+  const list = days();
+  const existed = list.some(d=>d.date === date);
+  const entry = {
+    date,
     anxiety: +document.getElementById('rAnx').value,
     panic: +document.getElementById('rPan').value,
     depression: +document.getElementById('rDep').value,
     stress: +document.getElementById('rStr').value,
-    type: recheckTarget ? 'recheck' : 'checkin',
-    parent: recheckTarget || null,
-    skill: recheckTarget ? document.getElementById('fSkillUsed').value : null
+    emotions: [...selEmos],
+    skills: [...selSkills],
+    notes: document.getElementById('fNotes').value.trim(),
+    updated: new Date().toISOString()
   };
-  const list = entries(); list.push(e); saveEntries(list);
-  if (recheckTarget){ Store.del(KEY_PENDING); recheckTarget = null; toast('Re-check saved. Delta logged.'); }
-  else { Store.set(KEY_PENDING, e.id); toast('Saved. Do a skill, then re-check in 10–20 min.'); }
-  clearForm(); renderTrack();
+  saveDays(list.filter(d=>d.date !== date).concat(entry));
+  toast(existed ? 'Day updated.' : 'Day saved.');
+  loadDay(date);
+  renderDaily();
 }
-function clearForm(){
-  ['fSituation','fThoughts'].forEach(id=>document.getElementById(id).value='');
-  selectedEmos.clear();
-  document.querySelectorAll('#emoChips .chip').forEach(c=>c.classList.remove('on'));
-  document.getElementById('skillUsedWrap').style.display = 'none';
-  document.getElementById('cancelRecheck').style.display = 'none';
-  document.getElementById('recheckBanner').style.display = 'none';
-  document.getElementById('entryTitle').textContent = 'New check-in';
+function editDay(date){
+  loadDay(date);
+  document.getElementById('fDate').scrollIntoView({behavior:'smooth', block:'center'});
+  document.getElementById('fDate').focus({preventScroll:true});
 }
-function beginRecheck(){
-  const pid = Store.get(KEY_PENDING, null);
-  const parent = entries().find(e=>e.id===pid);
-  if (!parent){ Store.del(KEY_PENDING); renderTrack(); return; }
-  recheckTarget = pid;
-  document.getElementById('entryTitle').textContent = 'Re-check';
-  const rb = document.getElementById('recheckBanner');
-  rb.style.display = 'block';
-  rb.textContent = 'Comparing against your check-in from ' + fmtTime(parent.ts) + ' (anx ' + parent.anxiety + ' · panic ' + parent.panic + ' · dep ' + parent.depression + ' · stress ' + parent.stress + ').';
-  document.getElementById('skillUsedWrap').style.display = 'block';
-  document.getElementById('cancelRecheck').style.display = 'block';
-  document.getElementById('newEntryCard').scrollIntoView({behavior:'smooth'});
+function deleteDay(date){
+  if (!confirm('Delete the entry for ' + fmtDay(date, true) + '?')) return;
+  saveDays(days().filter(d=>d.date !== date));
+  if (document.getElementById('fDate').value === date) loadDay(date);
+  renderDaily();
+  toast('Entry deleted.');
 }
-function cancelRecheck(){ recheckTarget = null; clearForm(); }
-function fmtTime(iso){
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined,{month:'short',day:'numeric'}) + ' ' + d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit'});
+function streak(list){
+  const set = new Set(list.map(d=>d.date));
+  const d = parseYMD(todayStr());
+  if (!set.has(ymd(d))) d.setDate(d.getDate()-1); // today not logged yet doesn't break it
+  let n = 0;
+  while (set.has(ymd(d))){ n++; d.setDate(d.getDate()-1); }
+  return n;
 }
-function renderTrack(){
-  // pending re-check card
-  const pid = Store.get(KEY_PENDING, null);
-  const pend = document.getElementById('pendingCard');
-  if (pid && entries().find(e=>e.id===pid)){
-    const p = entries().find(e=>e.id===pid);
-    const mins = Math.round((Date.now() - p.id)/60000);
-    pend.style.display = 'block';
-    document.getElementById('pendingText').textContent = 'You checked in ' + mins + ' min ago (anxiety ' + p.anxiety + ', panic ' + p.panic + '). Used a skill yet? Re-rate to see if the numbers moved.';
-  } else pend.style.display = 'none';
+function renderDaily(){
+  const list = days();
+  const label = METRICS.find(m=>m[0]===chartMetric)[1];
+  chipRow('metricRow', METRICS, chartMetric, v=>{ chartMetric = v; renderDaily(); });
+  chipRow('dayRangeRow', [[30,'30 days'],[90,'90 days'],[365,'1 year'],[0,'All']], dayRange, v=>{ dayRange = v; renderDaily(); });
+
+  // chart
+  const xMax = endOfToday();
+  const xMin = dayRange ? rangeStart(dayRange) : (list.length ? Math.min(parseYMD(list[0].date).getTime(), rangeStart(7)) : rangeStart(30));
+  const pts = list.map(d=>({x: parseYMD(d.date).getTime() + DAY_MS/2, y: +d[chartMetric] || 0, date: d.date}))
+    .filter(p=>p.x >= xMin && p.x <= xMax)
+    .map(p=>({x:p.x, y:p.y, val: label + ' ' + p.y + '/10', when: fmtDay(p.date)}));
+  let summary = label + ' by day.';
+  if (pts.length){
+    const avg = pts.reduce((a,p)=>a+p.y,0) / pts.length;
+    summary = label + ' by day, ' + (dayRange ? 'last ' + dayRange + ' days' : 'all time') + ': ' + pts.length + ' days logged, average ' + avg.toFixed(1) + ' out of 10, most recent ' + pts[pts.length-1].y + ' on ' + pts[pts.length-1].when + '.';
+  }
+  lineChart('dayChart', pts, {
+    xMin, xMax, yMax:10, yTicks:[0,2,4,6,8,10], color:'#C9A45C', summary,
+    empty: list.length ? 'Nothing logged in this range.' : 'Log your first day and the graph of dread starts here.'
+  });
+
+  // stats
+  const wk = list.filter(d=>parseYMD(d.date).getTime() >= rangeStart(7));
+  const avg7 = wk.length ? (wk.reduce((a,d)=>a + (+d[chartMetric]||0), 0) / wk.length).toFixed(1) : '—';
+  const counts = {};
+  list.forEach(d=>(d.skills||[]).forEach(s=>counts[s] = (counts[s]||0) + 1));
+  const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('statGrid').innerHTML =
+    '<div class="stat"><div class="n">' + list.length + '</div><div class="l">days logged</div></div>' +
+    '<div class="stat"><div class="n">' + streak(list) + '</div><div class="l">day streak</div></div>' +
+    '<div class="stat"><div class="n">' + avg7 + '</div><div class="l">7-day avg ' + esc(label.toLowerCase()) + '</div></div>' +
+    '<div class="stat"><div class="n" style="font-size:15px;padding-top:6px">' + (top ? esc(top[0]) : '—') + '</div><div class="l">most used skill</div></div>';
 
   // history
   const host = document.getElementById('historyHost');
-  const list = entries().slice().reverse();
-  if (!list.length){ host.innerHTML = '<p style="font-size:14px;color:var(--bone-dim)">Nothing yet. The graph of dread awaits its first data point.</p>'; }
-  else {
-    host.innerHTML = list.slice(0,40).map(e=>{
-      let deltaHtml = '';
-      if (e.type==='recheck' && e.parent){
-        const par = entries().find(x=>x.id===e.parent);
-        if (par){
-          const d = (par.anxiety + par.panic + par.stress) - (e.anxiety + e.panic + e.stress);
-          const cls = d >= 0 ? 'delta-good' : 'delta-bad';
-          deltaHtml = ' · <span class="' + cls + '">' + (d>=0?'−':'+') + Math.abs(d) + ' total after ' + esc(e.skill||'skill') + '</span>';
-        }
-      }
-      return '<div class="entry">' +
-        '<div class="when">' + fmtTime(e.ts) + (e.type==='recheck' ? ' · RE-CHECK' : '') + '</div>' +
-        '<div class="nums">anx ' + e.anxiety + ' · panic ' + e.panic + ' · dep ' + e.depression + ' · stress ' + e.stress + deltaHtml + '</div>' +
-        (e.emotions.length ? '<div class="nums">' + e.emotions.map(esc).join(', ') + '</div>' : '') +
-        (e.situation ? '<div class="sit">' + esc(e.situation) + '</div>' : '') +
-        (e.thoughts ? '<div class="sit" style="color:var(--bone-dim);font-style:italic">"' + esc(e.thoughts) + '"</div>' : '') +
-      '</div>';
-    }).join('');
-  }
-  drawChart();
-  drawStats();
-}
-function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-function drawStats(){
-  const list = entries();
-  const rechecks = list.filter(e=>e.type==='recheck' && e.parent);
-  let totalDrop = 0, n = 0;
-  const bySkill = {};
-  rechecks.forEach(e=>{
-    const par = list.find(x=>x.id===e.parent);
-    if (!par) return;
-    const d = (par.anxiety + par.panic + par.stress) - (e.anxiety + e.panic + e.stress);
-    totalDrop += d; n++;
-    const k = e.skill || 'Other';
-    (bySkill[k] = bySkill[k] || []).push(d);
-  });
-  let best = '—', bestAvg = -Infinity;
-  Object.entries(bySkill).forEach(([k,arr])=>{
-    const avg = arr.reduce((a,b)=>a+b,0)/arr.length;
-    if (avg > bestAvg){ bestAvg = avg; best = k; }
-  });
-  const days = new Set(list.map(e=>e.ts.slice(0,10))).size;
-  document.getElementById('statGrid').innerHTML =
-    '<div class="stat"><div class="n">' + list.length + '</div><div class="l">entries</div></div>' +
-    '<div class="stat"><div class="n">' + days + '</div><div class="l">days tracked</div></div>' +
-    '<div class="stat"><div class="n">' + (n ? (totalDrop/n).toFixed(1) : '—') + '</div><div class="l">avg drop after skill</div></div>' +
-    '<div class="stat"><div class="n" style="font-size:15px;padding-top:6px">' + esc(best) + '</div><div class="l">most effective skill</div></div>';
+  if (!list.length){ host.innerHTML = '<p style="font-size:14px;color:var(--bone-dim)">Nothing yet.</p>'; return; }
+  host.innerHTML = list.slice().reverse().slice(0, 60).map(d=>
+    '<div class="entry">' +
+      '<div class="top"><div class="when">' + esc(fmtDay(d.date)) + '</div>' +
+      '<div class="acts"><button class="linkbtn" data-edit="' + d.date + '" aria-label="Edit ' + esc(fmtDay(d.date, true)) + '">Edit</button>' +
+      '<button class="linkbtn del" data-del="' + d.date + '" aria-label="Delete ' + esc(fmtDay(d.date, true)) + '">Delete</button></div></div>' +
+      '<div class="nums">anxiety ' + d.anxiety + ' · panic ' + d.panic + ' · depression ' + d.depression + ' · stress ' + d.stress + '</div>' +
+      ((d.emotions||[]).length ? '<div class="nums">' + d.emotions.map(esc).join(', ') + '</div>' : '') +
+      ((d.skills||[]).length ? '<div class="nums" style="color:var(--fog)">skills: ' + d.skills.map(esc).join(', ') + '</div>' : '') +
+      (d.notes ? '<div class="sit" style="white-space:pre-line">' + esc(d.notes) + '</div>' : '') +
+    '</div>').join('');
+  host.querySelectorAll('[data-edit]').forEach(b=>b.onclick = ()=>editDay(b.dataset.edit));
+  host.querySelectorAll('[data-del]').forEach(b=>b.onclick = ()=>deleteDay(b.dataset.del));
 }
 
-function drawChart(){
-  const cv = document.getElementById('chart');
-  const dpr = window.devicePixelRatio || 1;
-  const w = cv.clientWidth || 640, h = 220;
-  cv.width = w * dpr; cv.height = h * dpr;
-  const ctx = cv.getContext('2d');
-  ctx.scale(dpr, dpr);
-  ctx.clearRect(0,0,w,h);
-  const list = entries();
-  const pad = {l:28, r:10, t:14, b:22};
-  // grid
-  ctx.strokeStyle = 'rgba(201,164,92,.15)'; ctx.fillStyle = '#8FA3B0';
-  ctx.font = '10px monospace'; ctx.lineWidth = 1;
-  for (let v=0; v<=10; v+=2){
-    const y = pad.t + (h - pad.t - pad.b) * (1 - v/10);
-    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
-    ctx.fillText(v, 8, y + 3);
-  }
-  if (list.length < 2){
-    ctx.fillStyle = '#B9AE97'; ctx.font = 'italic 13px Georgia';
-    ctx.fillText('Two or more entries required to plot the dread.', pad.l + 10, h/2);
-    return;
-  }
-  const xs = list.map((e,i)=> pad.l + (w - pad.l - pad.r) * (list.length===1 ? 0 : i/(list.length-1)));
-  const ys = list.map(e=> pad.t + (h - pad.t - pad.b) * (1 - (e[chartMetric]||0)/10));
-  ctx.strokeStyle = '#C9A45C'; ctx.lineWidth = 2;
-  ctx.beginPath();
-  xs.forEach((x,i)=> i ? ctx.lineTo(x, ys[i]) : ctx.moveTo(x, ys[i]));
-  ctx.stroke();
-  list.forEach((e,i)=>{
-    ctx.beginPath();
-    ctx.fillStyle = e.type==='recheck' ? '#7FA36B' : '#B4494D';
-    ctx.arc(xs[i], ys[i], 3.5, 0, Math.PI*2); ctx.fill();
+/* ================= MEDICATIONS ================= */
+function meds(){ return Store.get(KEY_MEDS, []); }
+function saveMeds(list){ list.sort((a,b)=>medMs(a) - medMs(b)); Store.set(KEY_MEDS, list); }
+function medKey(n){ return String(n||'').trim().toLowerCase(); }
+function medMs(m){ const d = parseYMD(m.date); const [h,mi] = (m.time||'00:00').split(':').map(Number); d.setHours(h, mi); return d.getTime(); }
+// one row per medication, most recently logged first, with its last dose and unit
+function medList(){
+  const by = {};
+  meds().forEach(m=>{ by[medKey(m.name)] = {key:medKey(m.name), name:m.name, dose:m.dose, unit:m.unit, ms:medMs(m)}; });
+  return Object.values(by).sort((a,b)=>b.ms - a.ms);
+}
+function fillDose(m){
+  document.getElementById('mName').value = m.name;
+  document.getElementById('mDose').value = m.dose;
+  document.getElementById('mUnit').value = m.unit;
+  document.getElementById('mDate').value = todayStr();
+  document.getElementById('mTime').value = nowTime();
+  document.getElementById('mDose').focus();
+}
+function saveDose(){
+  const name = document.getElementById('mName').value.trim();
+  const doseRaw = document.getElementById('mDose').value;
+  const dose = parseFloat(doseRaw);
+  const unit = document.getElementById('mUnit').value;
+  const date = document.getElementById('mDate').value;
+  const time = document.getElementById('mTime').value;
+  if (!name){ toast('Add the medication name.'); document.getElementById('mName').focus(); return; }
+  if (doseRaw === '' || !isFinite(dose) || dose < 0){ toast('Add a dose (a number).'); document.getElementById('mDose').focus(); return; }
+  if (!date || !time){ toast('Add the date and time.'); return; }
+  if (date > todayStr()){ toast("That day hasn't happened yet."); return; }
+  const list = meds();
+  list.push({id: Date.now() + '-' + Math.random().toString(36).slice(2,7), name, dose, unit, date, time});
+  saveMeds(list);
+  medPick = medKey(name);
+  document.getElementById('mDose').value = '';
+  document.getElementById('mTime').value = nowTime();
+  document.getElementById('mDate').value = todayStr();
+  toast('Logged ' + name + ' ' + fmtNum(dose) + ' ' + unit + '.');
+  renderMeds();
+}
+function deleteDose(id){
+  const m = meds().find(x=>String(x.id) === id);
+  if (!m || !confirm('Delete ' + m.name + ' ' + fmtNum(m.dose) + ' ' + m.unit + ' on ' + fmtDay(m.date) + ' at ' + fmtClock(m.time) + '?')) return;
+  saveMeds(meds().filter(x=>String(x.id) !== id));
+  renderMeds();
+  toast('Dose deleted.');
+}
+function renderMeds(){
+  const all = meds();
+  const names = medList();
+  // datalist + quick-fill chips
+  const dl = document.getElementById('medNames'); dl.innerHTML = '';
+  names.forEach(m=>{ const o = document.createElement('option'); o.value = m.name; dl.appendChild(o); });
+  const q = document.getElementById('medQuick'); q.innerHTML = '';
+  names.slice(0, 8).forEach(m=>{
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'chip';
+    b.textContent = m.name + ' ' + fmtNum(m.dose) + ' ' + m.unit;
+    b.setAttribute('aria-label', 'Fill in ' + b.textContent + ', now');
+    b.onclick = ()=>fillDose(m);
+    q.appendChild(b);
   });
-  // legend
-  ctx.fillStyle = '#B4494D'; ctx.fillRect(pad.l, h-12, 8, 8);
-  ctx.fillStyle = '#B9AE97'; ctx.fillText('check-in', pad.l + 12, h-5);
-  ctx.fillStyle = '#7FA36B'; ctx.fillRect(pad.l + 72, h-12, 8, 8);
-  ctx.fillStyle = '#B9AE97'; ctx.fillText('re-check', pad.l + 84, h-5);
+  q.style.display = names.length ? '' : 'none';
+
+  // chart controls
+  if (!names.some(m=>m.key === medPick)) medPick = names.length ? names[0].key : null;
+  chipRow('medPickRow', names.map(m=>[m.key, m.name]), medPick, v=>{ medPick = v; renderMeds(); });
+  chipRow('medModeRow', [['each','Each dose'],['daily','Daily total']], medMode, v=>{ medMode = v; renderMeds(); });
+  chipRow('medRangeRow', [[7,'7 days'],[30,'30 days'],[90,'90 days'],[0,'All']], medRange, v=>{ medRange = v; renderMeds(); });
+
+  // chart data: chosen med, plotted in its most recent unit
+  const cur = names.find(m=>m.key === medPick);
+  const logs = cur ? all.filter(m=>medKey(m.name) === medPick) : [];
+  const unit = cur ? cur.unit : '';
+  const same = logs.filter(m=>m.unit === unit);
+  const xMax = endOfToday();
+  const xMin = medRange ? rangeStart(medRange) : (same.length ? Math.min(parseYMD(same[0].date).getTime(), rangeStart(7)) : rangeStart(30));
+  let pts;
+  if (medMode === 'daily'){
+    const by = {};
+    same.forEach(m=>{ by[m.date] = (by[m.date]||0) + m.dose; });
+    pts = Object.keys(by).sort().map(d=>({x: parseYMD(d).getTime() + DAY_MS/2, y: by[d], val: fmtNum(by[d]) + ' ' + unit + ' total', when: fmtDay(d)}));
+  } else {
+    pts = same.map(m=>({x: medMs(m), y: m.dose, val: fmtNum(m.dose) + ' ' + unit, when: fmtDay(m.date) + ', ' + fmtClock(m.time)}));
+  }
+  pts = pts.filter(p=>p.x >= xMin && p.x <= xMax);
+  const yMax = niceMax(Math.max(0, ...pts.map(p=>p.y)));
+  const yTicks = [0, yMax/4, yMax/2, yMax*3/4, yMax];
+  let summary = cur ? cur.name + (medMode === 'daily' ? ' daily total' : ' doses') + ' in ' + unit + '.' : '';
+  if (pts.length){
+    summary = cur.name + (medMode === 'daily' ? ', total per day' : ', each dose') + ', ' + (medRange ? 'last ' + medRange + ' days' : 'all time') + ': ' + pts.length + ' points, most recent ' + pts[pts.length-1].val + ' on ' + pts[pts.length-1].when + '.';
+  }
+  lineChart('medChart', pts, {
+    xMin, xMax, yMax, yTicks, yFmt: fmtNum, color:'#C9A45C', summary,
+    empty: cur ? 'No ' + cur.name + ' doses in this range.' : 'Log a dose and the graph shows up here.'
+  });
+  if (logs.length > same.length){
+    const n = document.createElement('p'); n.className = 'hint'; n.style.margin = '6px 8px';
+    n.textContent = 'Graph shows doses logged in ' + unit + '. ' + (logs.length - same.length) + ' logged in other units are in the history below.';
+    document.getElementById('medChart').appendChild(n);
+  }
+
+  // history
+  const host = document.getElementById('medHistory');
+  if (!all.length){ host.innerHTML = '<p style="font-size:14px;color:var(--bone-dim)">No doses logged yet.</p>'; return; }
+  host.innerHTML = all.slice().reverse().slice(0, 60).map(m=>
+    '<div class="entry"><div class="top">' +
+      '<div><div class="when">' + esc(fmtDay(m.date)) + ' · ' + esc(fmtClock(m.time)) + '</div>' +
+      '<div class="sit"><b>' + esc(m.name) + '</b> ' + esc(fmtNum(m.dose)) + ' ' + esc(m.unit) + '</div></div>' +
+      '<div class="acts"><button class="linkbtn del" data-id="' + esc(m.id) + '" aria-label="Delete ' + esc(m.name) + ' ' + esc(fmtNum(m.dose)) + ' ' + esc(m.unit) + ', ' + esc(fmtDay(m.date)) + ' ' + esc(fmtClock(m.time)) + '">Delete</button></div>' +
+    '</div></div>').join('');
+  host.querySelectorAll('[data-id]').forEach(b=>b.onclick = ()=>deleteDose(b.dataset.id));
+}
+
+function renderTrack(){
+  if (document.getElementById('view-meds').hidden) renderDaily(); else renderMeds();
 }
 
 /* ================= QUOTES ================= */
@@ -1154,22 +1680,29 @@ const SOS_SEQ = [
   {phase:'FEEL', text:'Press your feet into the floor. Feel the chair or the ground holding your weight. It has been holding you this entire time.', dur:25},
   {phase:'NAME IT', text:'Say it plainly: "This is a panic response. It is intensely uncomfortable and not dangerous. It peaks and it passes. It always has."', dur:25},
   {phase:'REMEMBER', text:'You have survived one hundred percent of your worst moments. Your track record against panic is literally undefeated.', dur:20},
-  {phase:'RE-CHECK', text:'When you exit, log a re-check in the Track tab. The numbers moving down is evidence your brain can\'t argue with. Exit whenever you\'re ready — no rush.', dur:0}
+  {phase:'LOG IT', text:'When you exit, add today to the Track tab. Watching the numbers move over days is evidence your brain can\'t argue with. Exit whenever you\'re ready. No rush.', dur:0}
 ];
-let sosIdx = 0, sosTimer = null, sosBreathing = false;
+let sosIdx = 0, sosTimer = null, sosBreathing = false, sosCues = false;
 function startSOS(){
+  stopBreath(); stopPlayer();
   sosIdx = 0;
   document.getElementById('sosOverlay').classList.add('open');
   runSOSStep();
+  document.getElementById('sosNextBtn').focus();
 }
 function runSOSStep(){
   clearTimeout(sosTimer); clearTimeout(breathTimer);
   const s = SOS_SEQ[sosIdx];
   if (!s){ endSOS(); return; }
   document.getElementById('sosPhase').textContent = s.phase;
-  document.getElementById('sosText').textContent = s.text;
+  const st = document.getElementById('sosText');
+  if (Narrator.supported && Narrator.cfg.on) st.removeAttribute('aria-live'); else st.setAttribute('aria-live','polite');
+  st.textContent = s.text;
   const m = document.getElementById('sosMonocle');
-  document.getElementById('sosNextBtn').style.display = s.dur === 0 ? 'inline-block' : 'none';
+  document.getElementById('sosNextBtn').textContent = sosIdx === SOS_SEQ.length - 1 ? 'Finish' : 'Next';
+  // Narrate the step; in the breathing step, speak in/out cues once the intro is finished.
+  sosCues = false;
+  Narrator.speak(s.text, ()=>{ sosCues = !!s.breath; });
   if (s.breath){
     sosBreathing = true;
     // long-exhale pattern 4 in / 6 out, run ~9 cycles inside 90s
@@ -1179,6 +1712,7 @@ function runSOSStep(){
       if (!sosBreathing) return;
       const p = phases[pi % 2];
       document.getElementById('sosWord').textContent = p.w;
+      if (sosCues && Narrator.cfg.on) Narrator.speak(p.w);
       m.style.transition = 'transform ' + p.t + 's cubic-bezier(.4,0,.4,1)';
       m.style.transform = 'scale(' + p.s + ')';
       pi++;
@@ -1194,11 +1728,16 @@ function runSOSStep(){
 }
 function sosNext(){ sosIdx++; runSOSStep(); }
 function endSOS(){
-  sosBreathing = false;
+  sosBreathing = false; sosCues = false;
   clearTimeout(sosTimer); clearTimeout(breathTimer);
+  Narrator.stop();
   document.getElementById('sosOverlay').classList.remove('open');
   go('p-track');
-  toast('Log a re-check — see if the numbers moved.');
+  setTrackView('daily');
+  if (document.getElementById('fDate').value === todayStr() && !selSkills.has('Panic protocol')){
+    selSkills.add('Panic protocol'); renderFormChips();
+  }
+  toast('Panic protocol added to today. Save when ready.');
 }
 
 /* ================= EXPORT / IMPORT ================= */
@@ -1209,21 +1748,27 @@ function download(name, text, type){
   document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href), 5000);
 }
+function stamp(){ return todayStr(); }
+function toCSV(rows){ return rows.map(r=>r.map(c=>'"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n'); }
 function exportJSON(){
-  download('keep-your-head-' + new Date().toISOString().slice(0,10) + '.json',
-    JSON.stringify({exported:new Date().toISOString(), entries:entries()}, null, 2), 'application/json');
-  toast('JSON exported.');
+  download('keep-your-head-' + stamp() + '.json',
+    JSON.stringify({app:'keep-your-head', version:2, exported:new Date().toISOString(), daily:days(), medications:meds()}, null, 2), 'application/json');
+  toast('Exported.');
 }
 function exportCSV(){
-  const rows = [['id','timestamp','type','anxiety','panic','depression','stress','emotions','skill','situation','thoughts']];
-  entries().forEach(e=>{
-    rows.push([e.id, e.ts, e.type, e.anxiety, e.panic, e.depression, e.stress,
-      (e.emotions||[]).join('; '), e.skill||'', e.situation||'', e.thoughts||'']);
-  });
-  const csv = rows.map(r=>r.map(c=>'"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\n');
-  download('keep-your-head-' + new Date().toISOString().slice(0,10) + '.csv', csv, 'text/csv');
-  toast('CSV exported.');
+  const rows = [['date','anxiety','panic','depression','stress','emotions','skills','notes']];
+  days().forEach(d=>rows.push([d.date, d.anxiety, d.panic, d.depression, d.stress, (d.emotions||[]).join('; '), (d.skills||[]).join('; '), d.notes||'']));
+  download('keep-your-head-daily-' + stamp() + '.csv', toCSV(rows), 'text/csv');
+  toast('Daily log exported.');
 }
+function exportMedCSV(){
+  const rows = [['date','time','medication','dose','unit']];
+  meds().forEach(m=>rows.push([m.date, m.time, m.name, m.dose, m.unit]));
+  download('keep-your-head-medications-' + stamp() + '.csv', toCSV(rows), 'text/csv');
+  toast('Medication log exported.');
+}
+const isDay = d => d && /^\d{4}-\d{2}-\d{2}$/.test(d.date);
+const isDose = m => m && m.name && isFinite(+m.dose) && /^\d{4}-\d{2}-\d{2}$/.test(m.date) && /^\d{2}:\d{2}$/.test(m.time);
 function importJSON(){
   const f = document.getElementById('importFile').files[0];
   if (!f){ toast('Choose a JSON file first.'); return; }
@@ -1231,22 +1776,35 @@ function importJSON(){
   r.onload = ()=>{
     try{
       const data = JSON.parse(r.result);
-      const inc = Array.isArray(data) ? data : data.entries;
-      if (!Array.isArray(inc)) throw new Error('bad format');
-      const cur = entries();
-      const ids = new Set(cur.map(e=>e.id));
-      inc.forEach(e=>{ if(!ids.has(e.id)) cur.push(e); });
-      cur.sort((a,b)=>a.id-b.id);
-      saveEntries(cur);
+      // v1 exports were {entries:[...]} or a bare array of minute-level check-ins
+      const legacy = Array.isArray(data) ? data : Array.isArray(data.entries) ? data.entries : null;
+      const inDays = (legacy ? convertV1(legacy) : (data.daily || [])).filter(isDay);
+      const inMeds = (legacy ? [] : (data.medications || [])).filter(isDose);
+      if (!inDays.length && !inMeds.length && !legacy && !Array.isArray(data.daily)) throw new Error('bad format');
+      const cur = days(), have = new Set(cur.map(d=>d.date));
+      let nd = 0;
+      inDays.forEach(d=>{ if (!have.has(d.date)){ cur.push({
+        date:d.date, anxiety:+d.anxiety||0, panic:+d.panic||0, depression:+d.depression||0, stress:+d.stress||0,
+        emotions:Array.isArray(d.emotions)?d.emotions.map(String):[], skills:Array.isArray(d.skills)?d.skills.map(String):[],
+        notes:String(d.notes||''), updated:d.updated||new Date().toISOString() }); nd++; } });
+      saveDays(cur);
+      const cm = meds(), ids = new Set(cm.map(m=>String(m.id)));
+      let nm = 0;
+      inMeds.forEach(m=>{ if (!ids.has(String(m.id))){ cm.push({id:String(m.id||Date.now()+'-'+nm), name:String(m.name), dose:+m.dose, unit:String(m.unit||'mg'), date:m.date, time:m.time}); nm++; } });
+      saveMeds(cm);
+      loadDay(document.getElementById('fDate').value || todayStr());
       renderTrack();
-      toast('Imported ' + inc.length + ' entries (merged).');
+      toast('Imported ' + nd + ' days and ' + nm + ' doses.');
     }catch(err){ toast('Import failed: not a valid export file.'); }
   };
   r.readAsText(f);
 }
 function wipe(){
-  if (!confirm('Delete ALL tracking data on this device? This cannot be undone.')) return;
+  if (!confirm('Delete ALL tracking and medication data on this device? This cannot be undone.')) return;
   Store.del(KEY); Store.del(KEY_PENDING);
+  Store.set(KEY_DAILY, []); Store.set(KEY_MEDS, []);
+  medPick = null;
+  loadDay(todayStr());
   renderTrack(); toast('Everything deleted. Clean slate.');
 }
 
@@ -1275,11 +1833,15 @@ function wipe(){
 /* ================= init ================= */
 initPresets();
 initSkills();
+initVoiceSettings();
 initTrack();
 render54321();
-renderTrack();
 nextQuote();
-window.addEventListener('resize', drawChart);
+let resizeT = null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(resizeT);
+  resizeT = setTimeout(()=>{ if (document.getElementById('p-track').classList.contains('active')) renderTrack(); }, 150);
+});
 if (!Store.persistent){
   console.warn('localStorage unavailable — running with in-memory storage (data will not persist).');
 }
