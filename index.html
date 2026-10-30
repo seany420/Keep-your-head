@@ -294,6 +294,81 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, .chip:focus-v
 .toast.show{opacity:1}
 .crisis{font-size:12px;color:var(--bone-dim);text-align:center;margin-top:20px;line-height:1.6}
 .crisis b{color:var(--oxblood-bright)}
+
+/* ---------- nuclear option ---------- */
+.nuke-wrap{text-align:center;margin:6px 0 18px;padding:18px 12px 16px;background:var(--ink2);border:1px solid rgba(201,164,92,.22);border-radius:var(--radius)}
+.nuke-ring{
+  width:196px;height:196px;margin:0 auto;border-radius:50%;padding:12px;
+  background:repeating-conic-gradient(#E0B21C 0 15deg, #17120a 15deg 30deg);
+  box-shadow:0 10px 30px rgba(0,0,0,.55), 0 0 0 3px #17120a;
+}
+.nuke-btn{
+  width:100%;height:100%;border-radius:50%;border:none;cursor:pointer;padding:22px;
+  background:radial-gradient(circle at 40% 32%, #E0575B 0%, #B0272C 45%, #6E1013 100%);
+  box-shadow:inset 0 -10px 18px rgba(0,0,0,.45), inset 0 6px 12px rgba(255,255,255,.25), 0 8px 0 #4a0b0d, 0 10px 14px rgba(0,0,0,.5);
+  transition:transform .08s ease, box-shadow .08s ease;
+}
+.nuke-btn svg{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
+.nuke-btn:active, .nuke-btn.pressed{transform:translateY(7px);box-shadow:inset 0 -6px 14px rgba(0,0,0,.5), inset 0 4px 10px rgba(255,255,255,.18), 0 1px 0 #4a0b0d, 0 2px 6px rgba(0,0,0,.5)}
+.nuke-btn:focus-visible{outline:3px solid var(--bone);outline-offset:6px}
+.nuke-label{font-family:var(--displaysc);font-size:22px;letter-spacing:.08em;color:var(--oxblood-bright);margin-top:16px}
+.nuke-sub{font-size:13.5px;color:var(--bone-dim);margin-top:2px}
+#nukeOverlay{position:fixed;inset:0;z-index:110;background:#0d0a12;display:none;overflow-y:auto}
+#nukeOverlay.open{display:block}
+.nuke-inner{max-width:560px;margin:0 auto;padding:max(14px, env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));min-height:100%;display:flex;flex-direction:column}
+.nuke-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.nuke-top .big{font-family:var(--displaysc);font-size:20px;letter-spacing:.08em;color:var(--brass)}
+.iconbtn{background:none;border:1px solid var(--brass-dim);color:var(--bone);width:40px;height:40px;border-radius:50%;font-size:18px;cursor:pointer}
+.iconbtn:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+#nukeStage{text-align:center}
+#nukeStage svg{width:100%;height:auto;display:block;border-radius:var(--radius);border:1px solid rgba(201,164,92,.2)}
+.nuke-cap{font-family:var(--display);font-size:20px;color:var(--bone);min-height:64px;margin:14px 0 6px}
+.nuke-cap span{display:block;animation:capin .6s ease 3.7s both}
+.nuke-cap span + span{animation-delay:4.4s;color:var(--brass);font-style:italic;font-size:17px}
+@keyframes capin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* scene: base styles are the END state, so reduced motion shows the aftermath without the flash */
+.nk-fire{animation:nkFire 2.6s ease-out .8s both;opacity:.75}
+@keyframes nkFire{0%{opacity:0;transform:scale(.05)}25%{opacity:1;transform:scale(1.15)}100%{opacity:.75;transform:scale(1)}}
+.nk-flash{opacity:0;animation:nkFlash .75s ease-out 1.05s both}
+@keyframes nkFlash{0%{opacity:0}25%{opacity:.85}100%{opacity:0}}
+.nk-tint{opacity:.32;animation:nkTint 1.2s ease 1.1s both}
+@keyframes nkTint{from{opacity:0}to{opacity:.32}}
+.nk-cloud{animation:nkCloud 2.6s cubic-bezier(.2,.7,.3,1) 1.15s both}
+@keyframes nkCloud{0%{transform:scale(.08,.02);opacity:0}15%{opacity:1}100%{transform:scale(1);opacity:1}}
+.nk-shock{opacity:0;animation:nkShock 1.7s ease-out 1.1s both}
+@keyframes nkShock{0%{transform:scale(1);opacity:0}6%{transform:scale(1.5);opacity:.9}100%{transform:scale(32,9);opacity:0}}
+.nk-flesh{opacity:0;animation:nkFlesh .8s ease-in 1.2s both}
+@keyframes nkFlesh{0%{opacity:1;transform:none}35%{opacity:1;transform:translateX(-3px)}100%{opacity:0;transform:translateX(-16px) skewX(-10deg)}}
+.nk-bones{animation:nkBones .5s ease 1.2s both;filter:drop-shadow(0 0 4px rgba(143,163,176,.7))}
+@keyframes nkBones{from{opacity:0}to{opacity:1}}
+.nk-ash circle{opacity:0;animation:nkAsh 1.3s ease-out both}
+@keyframes nkAsh{0%{opacity:0;transform:translate(0,0)}8%{opacity:.9;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx), var(--dy))}}
+.nk-wave{transform:rotate(-135deg);animation:nkWave 1.6s ease-in-out 3.5s both}
+@keyframes nkWave{0%{transform:rotate(0)}30%{transform:rotate(-140deg)}45%{transform:rotate(-115deg)}60%{transform:rotate(-140deg)}75%{transform:rotate(-115deg)}100%{transform:rotate(-135deg)}}
+.nk-idle{animation:nkIdle 1.1s ease-in-out 0s 1 both}
+@keyframes nkIdle{0%,100%{transform:none}50%{transform:translateY(-2px)}}
+/* cards */
+#nukeCards{display:flex;flex-direction:column;flex:1}
+#nukeCards[hidden], #nukeStage[hidden]{display:none}
+.ncard{
+  background:linear-gradient(165deg, var(--ink3), var(--ink2));
+  border:1px solid var(--brass-dim);border-radius:18px;padding:22px 20px;
+  min-height:360px;display:flex;flex-direction:column;gap:12px;touch-action:pan-y;
+  animation:ncin .35s ease both;
+}
+.ncard.back{animation-name:ncinBack}
+@keyframes ncin{from{opacity:0;transform:translateX(24px) rotate(1deg)}to{opacity:1;transform:none}}
+@keyframes ncinBack{from{opacity:0;transform:translateX(-24px) rotate(-1deg)}to{opacity:1;transform:none}}
+.ncard .ntag{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--fog);display:flex;justify-content:space-between}
+.ncard .nq{font-family:var(--display);font-size:24px;line-height:1.3;color:var(--bone)}
+.ncard .nb{font-size:15px;color:var(--bone);line-height:1.55}
+.ncard .ndo{background:rgba(143,163,176,.1);border-left:3px solid var(--fog);border-radius:8px;padding:11px 13px;font-size:15px}
+.ncard .ndo b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fog);margin-bottom:3px}
+.ncard .nsrc{font-size:12px;color:var(--bone-dim);font-style:italic;margin-top:auto}
+.ncard-nav{display:flex;align-items:center;justify-content:space-between;margin:14px 0 6px;gap:10px}
+.ndots{display:flex;gap:8px}
+.ndots i{width:9px;height:9px;border-radius:50%;background:var(--ink3);border:1px solid var(--brass-dim)}
+.ndots i.on{background:var(--brass)}
 @media (prefers-reduced-motion: reduce){
   *{animation:none !important;transition:none !important}
 }
@@ -337,6 +412,31 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, .chip:focus-v
     <div class="t">☠ PANIC PROTOCOL</div>
     <div class="d">Full guided sequence: 90 seconds of breath → grounding → re-check. For when thinking is not currently available.</div>
   </button>
+
+  <div class="nuke-wrap">
+    <div class="nuke-ring">
+      <button class="nuke-btn" id="nukeBtn" onclick="startNuke(this)" aria-label="The nuclear option. Push for an optimistic nihilism reset with 3 cards.">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <g stroke="#EDE4D0" stroke-width="9" stroke-linecap="round">
+          <line x1="20" y1="60" x2="80" y2="92"/><line x1="80" y1="60" x2="20" y2="92"/>
+        </g>
+        <g fill="#EDE4D0">
+          <circle cx="15" cy="56" r="6"/><circle cx="21" cy="52" r="6"/><circle cx="85" cy="56" r="6"/><circle cx="79" cy="52" r="6"/>
+          <circle cx="15" cy="96" r="6"/><circle cx="21" cy="99" r="5"/><circle cx="85" cy="96" r="6"/><circle cx="79" cy="99" r="5"/>
+          <ellipse cx="50" cy="38" rx="27" ry="25"/>
+          <rect x="36" y="52" width="28" height="18" rx="6"/>
+        </g>
+        <g fill="#3a0d0f">
+          <ellipse cx="40" cy="39" rx="7.5" ry="8.5"/><ellipse cx="60" cy="39" rx="7.5" ry="8.5"/>
+          <path d="M50 47 L45.5 55 L54.5 55 Z"/>
+          <rect x="41" y="61" width="2.6" height="9"/><rect x="47" y="61" width="2.6" height="9"/><rect x="53" y="61" width="2.6" height="9"/><rect x="59" y="61" width="2.4" height="8"/>
+        </g>
+      </svg>
+      </button>
+    </div>
+    <div class="nuke-label">THE NUCLEAR OPTION</div>
+    <div class="nuke-sub">Push it. Become a skeleton. Draw 3 cards for the dread.</div>
+  </div>
 
   <div class="quick-grid">
     <button class="quick" onclick="go('p-breathe')"><div class="qt">Breathe</div><div class="qd">The monocle expands. So do your lungs.</div></button>
@@ -558,6 +658,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, .chip:focus-v
   </div>
   <div class="quote-card" id="quoteCard"></div>
   <button class="btn block ghost" onclick="nextQuote()">Draw another</button>
+  <button class="btn block danger" onclick="startNuke()">☢ Push the nuclear option</button>
 </section>
 
 <!-- ============ DATA ============ -->
@@ -627,6 +728,29 @@ input:focus-visible, textarea:focus-visible, select:focus-visible, .chip:focus-v
       </span>
     </div>
     <div class="voice-note" id="plNote" role="status"></div>
+  </div>
+</div>
+
+<!-- ============ nuclear option overlay ============ -->
+<div id="nukeOverlay" role="dialog" aria-modal="true" aria-labelledby="nukeTitle">
+  <div class="nuke-inner">
+    <div class="nuke-top">
+      <span class="big" id="nukeTitle">THE NUCLEAR OPTION</span>
+      <button class="iconbtn" onclick="closeNuke()" aria-label="Close">✕</button>
+    </div>
+    <div id="nukeStage"></div>
+    <div id="nukeCards" hidden>
+      <article class="ncard" id="nukeCard" aria-live="polite"></article>
+      <div class="ncard-nav">
+        <button class="btn small ghost" id="nkPrev" onclick="nukeGo(-1)" aria-label="Previous card">‹ Back</button>
+        <div class="ndots" id="nkDots" aria-hidden="true"></div>
+        <button class="btn small ghost" id="nkNext" onclick="nukeGo(1)" aria-label="Next card">Next ›</button>
+      </div>
+      <div class="row" style="justify-content:center">
+        <button class="btn small calm" id="nkRead" onclick="readNukeCard()">Read aloud</button>
+        <button class="btn small ghost" onclick="startNuke()">☢ Push again</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1073,7 +1197,12 @@ function trapFocus(container, e){
 document.addEventListener('keydown', e=>{
   const pl = document.getElementById('playerOverlay');
   const sos = document.getElementById('sosOverlay');
-  if (pl.classList.contains('open')){
+  const nk = document.getElementById('nukeOverlay');
+  if (nk.classList.contains('open')){
+    if (e.key === 'Escape') closeNuke();
+    else if (e.key === 'Tab') trapFocus(nk, e);
+    else if (!document.getElementById('nukeCards').hidden && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) nukeGo(e.key === 'ArrowRight' ? 1 : -1);
+  } else if (pl.classList.contains('open')){
     if (e.key === 'Escape') stopPlayer();
     else if (e.key === 'Tab') trapFocus(pl, e);
   } else if (sos.classList.contains('open')){
@@ -1184,7 +1313,7 @@ function initSkills(){
 
 /* ================= TRACKING: shared helpers ================= */
 const EMOTIONS = ['anxious','panicked','dread','overwhelmed','irritable','sad','numb','ashamed','restless','exhausted','hopeless','wired','okay-ish'];
-const SKILL_NAMES = ['Breathing','5-4-3-2-1','Pelvic floor drop','PMR','Cold anchor','Leaves on a stream','Passengers on the bus','Quick defusion','Panic protocol','TIPP','STOP','ACCEPTS','Self-soothe','Radical acceptance','Opposite action','Check the facts'];
+const SKILL_NAMES = ['Breathing','5-4-3-2-1','Pelvic floor drop','PMR','Cold anchor','Leaves on a stream','Passengers on the bus','Quick defusion','Panic protocol','Nuclear option','TIPP','STOP','ACCEPTS','Self-soothe','Radical acceptance','Opposite action','Check the facts'];
 const METRICS = [['anxiety','Anxiety'],['panic','Panic'],['depression','Depression'],['stress','Stress']];
 const DAY_MS = 86400000;
 let chartMetric = 'anxiety', dayRange = 30, medRange = 30, medMode = 'each', medPick = null;
@@ -1621,6 +1750,379 @@ function renderMeds(){
 function renderTrack(){
   if (document.getElementById('view-meds').hidden) renderDaily(); else renderMeds();
 }
+
+/* ================= NUCLEAR OPTION: card decks ================= */
+// One card from each deck per push. Each deck is a shuffle bag, so nothing repeats until the deck runs out.
+const NUKE_DECKS = [
+ {key:'zoom', tag:'Zoom out', icon:'✶', cards:[
+  {q:'How old is the light hitting your eyes right now?',
+   body:'Some of the starlight over your house tonight left its star before anyone you know was born. Your panic is happening inside a 13.8-billion-year-old universe that hasn\'t noticed. Awe shrinks the self, and a smaller self has less to defend.',
+   do:'Look at the nearest light. Say quietly: "This is a small event in a very big room." Breathe out slowly while you say it.',
+   src:'Awe and the "small self": Piff et al., 2015; Bai et al., 2017'},
+  {q:'Will this matter in 5 years? How about 500?',
+   body:'Imagining a moment from far in the future lowers distress about it right now. Your brain treats "temporary" as information, and it calms down when it gets it.',
+   do:'Picture yourself 5 years from now, remembering tonight. What do you remember? Probably very little. Let that version of you talk for 30 seconds.',
+   src:'Temporal distancing: Bruehlman-Senecal & Ayduk, 2015'},
+  {q:'If nothing matters cosmically, what is the worst case actually worth?',
+   body:'Nihilism cuts both ways. The catastrophe your brain is selling has the same cosmic weight as a sneeze. Take the discount.',
+   do:'Name the feared outcome in 1 sentence. Rate how bad it feels right now, 0 to 100. Then rate how bad it would be 1 week after it happened.',
+   src:'Decatastrophizing (Beck, 1976); the absurd (Camus, 1942; Nagel, 1971)'},
+  {q:'About 117 billion humans have ever lived. How many of them felt exactly this?',
+   body:'Most of them, at some point. Panic is old hardware. Remembering that suffering is shared, part of being a human animal, is a core piece of self-compassion and lowers the shame spiral.',
+   do:'Say: "This is what being a person feels like sometimes. Billions have been here. I\'m in good company."',
+   src:'Common humanity: Neff, 2003. Population estimate: Population Reference Bureau'},
+  {q:'What would this moment look like from the Moon?',
+   body:'Astronauts describe the "overview effect": seeing Earth whole and small, and feeling their worries reorganize. You can borrow a cheap version with imagination.',
+   do:'Zoom out in steps. Your room. Your building. Your city. The coastline. The whole planet, blue and quiet. Stay at the planet for 3 slow breaths.',
+   src:'Overview effect: Yaden et al., 2016'},
+  {q:'Who is narrating right now: you, or your threat system?',
+   body:'Talking to yourself by your own name, in the third person, creates distance from the feeling and improves regulation under stress. It works fast and it feels a little silly. Both are fine.',
+   do:'Say: "[Your name] is having a panic spike. [Your name] has survived every one of these so far. [Your name] is going to breathe now."',
+   src:'Distanced self-talk: Kross et al., 2014'},
+  {q:'What is the universe\'s opinion of how you\'re handling this?',
+   body:'It has none. Nobody is grading this. You can be a complete mess for 20 minutes with zero eternal consequences, which means you can stop performing "okay" and just get through it.',
+   do:'Drop the performance on purpose. Let your face go slack. Drop your shoulders. Let your hands open. Nobody\'s watching that matters.',
+   src:'Optimistic nihilism; acceptance over suppression (Hayes et al., 2012)'},
+  {q:'If you\'re a brief arrangement of stardust, what\'s the rush?',
+   body:'The carbon in you was forged in dying stars. You are temporary, and the panic is more temporary than you are. A panic attack peaks within minutes and then the body starts clearing the adrenaline.',
+   do:'Set a 10-minute timer. Your only job is to let the wave rise and fall without arguing with it. Check in when it rings.',
+   src:'Sagan, 1980; panic peaks within minutes (DSM-5)'},
+  {q:'What\'s the most likely outcome? Skip the worst one.',
+   body:'Anxiety reliably overestimates how likely the bad thing is and underestimates how well you\'d cope. Saying all 3 versions out loud puts the catastrophe back in proportion.',
+   do:'Finish 3 sentences. "The worst case is..." "The best case is..." "The most likely case is..." Then: "If the worst happened, I would cope by..."',
+   src:'Cognitive restructuring for anxiety: Beck & Clark, 1997'},
+  {q:'Can you watch this thought like weather?',
+   body:'A thought is an event in your head, the way a cloud is an event in the sky. Putting a little frame around it loosens its grip without having to win the argument.',
+   do:'Take the loudest thought and add a frame: "I\'m noticing I\'m having the thought that ___." Say it twice. Watch it drift a little.',
+   src:'Cognitive defusion: Hayes et al., 2012'},
+  {q:'If everything is temporary, is this feeling temporary too?',
+   body:'Yes. Every panic you\'ve ever had has ended, every single one. Your nervous system can\'t sustain this level of alarm. It runs out of fuel.',
+   do:'Name 1 past panic that ended. Where were you? How did it end? That is your evidence. This one is already on its way out.',
+   src:'Panic as time-limited arousal: Clark, 1986'},
+  {q:'What would the 90-year-old version of you say about tonight?',
+   body:'Feeling connected to your future self makes present choices wiser and present distress smaller. Old you has already survived this night.',
+   do:'Picture yourself at 90, comfortable, looking back. Let them say 1 sentence to you right now. Write it down if you can.',
+   src:'Future self-continuity: Hershfield, 2011'},
+  {q:'How big is tonight compared to your whole life?',
+   body:'Panic collapses time into 1 frightening moment. Putting the moment on a timeline restores the scale.',
+   do:'Draw a line on anything: paper, your palm, the air. The left end is your birth, the right end is your last day. Mark tonight as a tiny dot. Look at all the line around it.',
+   src:'Temporal perspective and distress: Bruehlman-Senecal & Ayduk, 2015'},
+  {q:'What if this is just a body doing body things?',
+   body:'Panic runs on misreading normal arousal as danger: fast heart means heart attack, dizziness means fainting. The sensations are adrenaline doing its job, which is uncomfortable and safe.',
+   do:'Name each sensation and its real cause. "Fast heart: pumping blood to my muscles." "Tight chest: braced breathing muscles." "Tingling: breathing a bit fast."',
+   src:'Catastrophic misinterpretation model of panic: Clark, 1986'}
+ ]},
+ {key:'ground', tag:'Ground', icon:'⚓', cards:[
+  {q:'Can you take 2 breaths in and 1 long breath out?',
+   body:'The physiological sigh: 2 inhales through the nose, the second one topping off, then a long, slow exhale through the mouth. In a 2023 study, a few minutes a day of this improved mood and lowered breathing rate more than mindfulness meditation did.',
+   do:'Do 3 physiological sighs. Inhale, sip in a little more, then let it all out slowly through your mouth like you\'re fogging a window.',
+   src:'Balban et al., 2023, Cell Reports Medicine'},
+  {q:'What can you see, feel, and hear right now?',
+   body:'Panic lives in the future. Your senses only report the present. Naming specific sensory details pulls attention out of the catastrophe and back into the room.',
+   do:'Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste. The weirder the detail, the better.',
+   src:'Sensory grounding; attention shifting (Wells, 1990)'},
+  {q:'Can you find something cold in the next minute?',
+   body:'Cold water on the face triggers the dive reflex, which slows your heart rate within about 30 seconds. It\'s the fastest physical brake you own.',
+   do:'Cold water on your face, or an ice cube or cold can against your wrists or the back of your neck. Hold 15 to 30 seconds and breathe out slowly. (Skip this if you have a heart condition.)',
+   src:'TIP skills, temperature: Linehan, 2015'},
+  {q:'What happens if you squeeze, then let go?',
+   body:'Tensing a muscle hard and then releasing it gives the body a clear "off" signal that\'s hard to get any other way. The contrast teaches muscles what relaxed feels like.',
+   do:'Press your palms together hard for 10 seconds. Release and feel the warmth. Do it again with your feet pushed into the floor.',
+   src:'Progressive muscle relaxation: Jacobson, 1938; DBT paired relaxation'},
+  {q:'What is the precise name of what you\'re feeling?',
+   body:'Putting a feeling into words lowers amygdala activity. The more precise the word, the better it works, so "dread about tomorrow\'s meeting" is worth the extra 2 seconds of hunting.',
+   do:'Find 2 precise words for the feeling. Say them as an observation: "There\'s dread here. There\'s shame here." Notice what shifts.',
+   src:'Affect labeling: Lieberman et al., 2007'},
+  {q:'Can you make your exhale longer than your inhale?',
+   body:'Slow breathing around 6 breaths a minute, with a long exhale, raises heart rate variability and shifts the nervous system toward calm. The exhale is the brake pedal.',
+   do:'Breathe in for 4, out for 6 to 8. Do 6 rounds. If counting is too much, just make every exhale a little slower than the one before.',
+   src:'Slow breathing review: Zaccaro et al., 2018'},
+  {q:'Where is the edge of the room?',
+   body:'Panic narrows your vision to the threat. Slowly moving your eyes and head to take in the space tells the brain you\'ve scanned and found nothing chasing you.',
+   do:'Turn your head slowly, left to right. Find the corners of the room. Then find 4 things that are blue. Let your eyes rest on each one.',
+   src:'Attention training: Wells, 1990'},
+  {q:'What are you clenching right now?',
+   body:'Jaw, shoulders, hands, belly, pelvic floor. Threat bracing runs the whole body and nobody notices. Releasing 1 spot often releases the others.',
+   do:'Unclench your jaw and let your tongue drop. Drop your shoulders. Soften your belly. Let the pelvic floor drop like an elevator going down 1 floor.',
+   src:'Somatic release; see Ground tab, Pelvic Floor Drop'},
+  {q:'What happens if you put a warm hand on your chest?',
+   body:'Soothing touch, even your own, lowered cortisol responses to a stress test in a 2021 study. Your body responds to care whether or not it comes from someone else.',
+   do:'Put 1 hand on your chest and 1 on your belly. Feel the warmth. Breathe into the lower hand for 5 slow breaths.',
+   src:'Self-soothing touch: Dreisoerner et al., 2021'},
+  {q:'What if you let the sensations come all the way in?',
+   body:'Fighting panic sensations feeds them. Letting them rise while you watch, the way you\'d watch a wave, teaches your brain they\'re survivable. This is how exposure therapy works.',
+   do:'Rate the intensity 0 to 10. Say "Okay. Come on, then." Let it do whatever it does for 60 seconds. Rate it again.',
+   src:'Interoceptive exposure: Craske et al., 2014'},
+  {q:'Can you count backward from 100 by 7s?',
+   body:'Hard mental math takes up working memory the panic loop needs to keep running. It\'s short-term relief, enough to get you to the other side of the peak.',
+   do:'100, 93, 86... Keep going until you lose track. Then start over from 99.',
+   src:'Distraction with thoughts, ACCEPTS: Linehan, 2015'},
+  {q:'Can you move hard for 60 seconds?',
+   body:'Adrenaline is printing energy for a fight. Spend it. Intense exercise burns through the arousal and gives the body the ending it\'s waiting for.',
+   do:'60 seconds of fast stairs, jumping jacks, wall push-ups, or shaking out your arms and legs like a wet dog. Then 3 slow breaths.',
+   src:'TIP skills, intense exercise: Linehan, 2015'},
+  {q:'Can you hum something low for 3 breaths?',
+   body:'Humming stretches out the exhale and gives you a vibration to focus on. It\'s slow breathing in disguise, and it\'s hard to hum and catastrophize at the same time.',
+   do:'Breathe in through your nose, then hum on a low note until the breath runs out. Feel it buzz in your chest and face. Repeat twice.',
+   src:'Slow, extended exhalation: Zaccaro et al., 2018'},
+  {q:'What strong sensation is within reach?',
+   body:'A loud sensory signal (sour, cold, textured, loud) competes with the panic signal for your brain\'s attention. Sometimes the louder input wins.',
+   do:'Sour candy. Hot sauce. A rough texture under your fingers. A loud song you love. Pick 1 and give it your full attention for 1 minute.',
+   src:'Distraction with sensations, ACCEPTS: Linehan, 2015'}
+ ]},
+ {key:'matters', tag:'What matters', icon:'♥', cards:[
+  {q:'If this were your last year, who would you text right now?',
+   body:'Close relationships are one of the main buffers against death anxiety. When mortality gets loud, connection turns the volume down.',
+   do:'Text that person something small. A photo, a memory, "thinking of you." No explanation needed.',
+   src:'Close relationships as an anxiety buffer: Mikulincer, Florian & Hirschberger, 2003'},
+  {q:'What do you want to be about today, with the anxiety riding along?',
+   body:'Anxiety asks you to wait until it leaves. Values say go anyway. You can carry fear and still move toward what matters.',
+   do:'Pick 1 value (kind, curious, brave, present). Name 1 tiny action that fits it, doable in the next 10 minutes. Do it with the anxiety in the passenger seat.',
+   src:'Values-based action: Hayes et al., 2012'},
+  {q:'What have you made, fixed, or helped that will outlast this panic?',
+   body:'People manage the fear of death partly through a sense of contributing to something that continues. That\'s real. The things you\'ve done keep happening in other people.',
+   do:'Name 2 things you\'ve done that are still out there doing something: a kindness, a piece of work, a kid you taught to ride a bike.',
+   src:'Symbolic immortality: Lifton, 1979; terror management theory (Solomon et al., 2015)'},
+  {q:'Who taught you something you still use?',
+   body:'Yalom calls it rippling: we pass pieces of ourselves on to people, who pass them on again. The person who taught you is rippling through you right now, and you are doing it to others.',
+   do:'Name them. Name what they taught you. If they\'re alive and you\'re up for it, tell them.',
+   src:'Rippling: Yalom, 2008, Staring at the Sun'},
+  {q:'Knowing it ends, what deserves your attention tonight?',
+   body:'Deep reflection on death, done deliberately, pushes people toward what they actually value (people, growth, meaning) and away from status and stuff.',
+   do:'Name 1 thing you\'ll give your attention to tonight because you won\'t get infinite nights. Make it small and real.',
+   src:'Death reflection: Cozzolino et al., 2004; Vail et al., 2012'},
+  {q:'What could you quit pretending to care about, since you only get the 1 life?',
+   body:'Chasing approval, image, and money tends to raise anxiety. Intrinsic goals (relationships, growth, community) are linked with better wellbeing. Mortality is permission to drop the act.',
+   do:'Name 1 "should" you\'re carrying that belongs to someone else. Say: "I\'m allowed to set that down."',
+   src:'Intrinsic vs. extrinsic goals: Kasser & Ryan, 1996'},
+  {q:'What small pleasure is available in the next hour?',
+   body:'When people are reminded something is ending, they enjoy it more. Scarcity sharpens savoring. You are allowed to use your mortality for that.',
+   do:'Pick 1 thing in the next hour: coffee, a song, the dog, the shower. Do it slowly and on purpose, like it\'s the last time.',
+   src:'Endings increase appreciation: Kurtz, 2008; savoring (Bryant & Veroff, 2007)'},
+  {q:'What are you glad exists at all, given it didn\'t have to?',
+   body:'The universe didn\'t owe us music, dogs, or tacos. Gratitude practice reliably lifts mood and reduces stress, and it\'s easier when you remember none of it was guaranteed.',
+   do:'Name 2 things you\'re glad exist. Be specific: that 1 song, that 1 person\'s laugh, that 1 smell.',
+   src:'Gratitude: Emmons & McCullough, 2003'},
+  {q:'What would you say to a friend who felt exactly this?',
+   body:'Most of us are kinder to friends than to ourselves. Self-compassion is linked to lower anxiety and better coping, and you already know how to do it. You just usually aim it outward.',
+   do:'Say the friend version out loud, to yourself, using "you." Keep your hand on your chest while you say it.',
+   src:'Self-compassion: Neff, 2003'},
+  {q:'Which part of your worldview is holding you up right now?',
+   body:'Terror management theory says we stay steady through a worldview that gives life meaning and a sense that we matter within it. Leaning on yours on purpose is a coping skill.',
+   do:'Name 1 thing that steadies you: a philosophy, a ritual, a song, a line from a book, a horror movie you\'ve seen 40 times. Put it on, read it, or say it.',
+   src:'Anxiety buffer: Greenberg, Pyszczynski & Solomon, 1986'},
+  {q:'What is the next right, tiny thing?',
+   body:'Panic makes everything feel all-or-nothing. A single small action restores a sense of agency, and agency is a strong antidote to dread.',
+   do:'Make it almost embarrassingly small: drink water, stand up, open a window, answer 1 email. Do it, then pick the next one.',
+   src:'Behavioral activation: Martell, Dimidjian & Herman-Dunn, 2010'},
+  {q:'If you\'re going to die anyway, what\'s the harm in being kind to yourself for 10 minutes?',
+   body:'Optimistic nihilism in one move. Nothing cosmic is riding on your toughness. Ten minutes of care costs nothing and it lowers the alarm.',
+   do:'Give yourself 10 minutes of something kind: lie down, a blanket, a warm drink, a show you love. No earning it first.',
+   src:'Self-compassion and threat: Neff, 2003; Gilbert, 2009'},
+  {q:'Who is in your corner?',
+   body:'Feeling supported dampens the stress response. Even calling to mind people who care about you can take the edge off.',
+   do:'Picture 2 people who\'d want to help right now. Imagine them in the room. If it\'s bad, actually call 1 of them. If it\'s a crisis, call or text 988.',
+   src:'Close relationships and existential anxiety: Mikulincer et al., 2003'},
+  {q:'What would you regret not doing that you could start this week?',
+   body:'Over the long run, people regret the things they didn\'t do more than the things they did. Mortality makes the list easier to write.',
+   do:'Name 1 thing. Then name the smallest first step, something you could do in 15 minutes this week. Put it on a calendar.',
+   src:'Regret over inaction: Gilovich & Medvec, 1995'}
+ ]}
+];
+
+const KEY_NUKE = 'kyh_nuke_bag_v1';
+const NUKE_CAPTIONS = [
+  ['Well. That happened.', 'Nothing matters. So you can breathe.'],
+  ['Still here. Lighter, somehow.', 'The universe shrugged. You can too.'],
+  ['Down to the bones.', 'Everything else was optional anyway.'],
+  ['Worst case: achieved.', 'Turns out the skeleton is pretty chill.'],
+  ['Cosmically, that was nothing.', 'Which means this is survivable.'],
+  ['Flesh is temporary. So is panic.', 'Let\'s get through the next 10 minutes.']
+];
+const nuke = { cards:[], idx:0, timer:null, lastFocus:null, capIdx:-1 };
+
+// Shuffle bag per deck: every card shows once before any repeats.
+function drawNukeCards(){
+  const bag = Store.get(KEY_NUKE, {});
+  const out = NUKE_DECKS.map(deck=>{
+    const n = deck.cards.length;
+    let left = (bag[deck.key] || []).filter(i=>Number.isInteger(i) && i >= 0 && i < n);
+    if (!left.length){
+      left = [...Array(n).keys()];
+      for (let i = n-1; i > 0; i--){ const j = Math.floor(Math.random()*(i+1)); [left[i], left[j]] = [left[j], left[i]]; }
+      const last = (bag.last || {})[deck.key];
+      if (n > 1 && left[0] === last) left.push(left.shift()); // no back-to-back repeat across reshuffles
+    }
+    const i = left.shift();
+    bag[deck.key] = left;
+    bag.last = Object.assign({}, bag.last, {[deck.key]: i});
+    return Object.assign({tag:deck.tag, icon:deck.icon}, deck.cards[i]);
+  });
+  Store.set(KEY_NUKE, bag);
+  return out;
+}
+
+function nukeScene(){
+  // Figure stands at x=110, blast at x=262, ground at y=230.
+  const ash = [[-30,-26],[-46,-8],[-38,10],[-58,-30],[-24,-44],[-52,16],[-64,-12],[-34,-36]]
+    .map(([dx,dy],i)=>'<circle cx="'+(108+(i%3)*4)+'" cy="'+(150+i*7)+'" r="'+(1.6+(i%3)*.6)+'" fill="#B9AE97" style="--dx:'+dx+'px;--dy:'+dy+'px;animation-delay:'+(1.25+i*.05)+'s"/>').join('');
+  return '<svg viewBox="0 0 360 290" role="img" aria-label="A person standing on a hill is hit by a distant nuclear blast. The flesh blows away, leaving a skeleton, which waves.">' +
+    '<defs>' +
+      '<linearGradient id="nkSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14101C"/><stop offset="1" stop-color="#3A1A2C"/></linearGradient>' +
+      '<radialGradient id="nkFireG"><stop offset="0" stop-color="#FFF4D6"/><stop offset=".35" stop-color="#F2C35B"/><stop offset=".75" stop-color="#D2552E"/><stop offset="1" stop-color="#8A3033" stop-opacity="0"/></radialGradient>' +
+      '<radialGradient id="nkFlashG" cx="73%" cy="79%" r="90%"><stop offset="0" stop-color="#FFFBEF"/><stop offset=".5" stop-color="#FFE7A8"/><stop offset="1" stop-color="#F2C35B"/></radialGradient>' +
+      '<linearGradient id="nkStem" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6E2A2C"/><stop offset=".5" stop-color="#B4494D"/><stop offset="1" stop-color="#6E2A2C"/></linearGradient>' +
+    '</defs>' +
+    '<rect width="360" height="290" fill="url(#nkSky)"/>' +
+    '<g fill="#EDE4D0" opacity=".55"><circle cx="40" cy="30" r="1"/><circle cx="96" cy="58" r=".8"/><circle cx="170" cy="22" r="1.1"/><circle cx="220" cy="64" r=".7"/><circle cx="300" cy="34" r="1"/><circle cx="338" cy="80" r=".8"/></g>' +
+    '<rect class="nk-tint" width="360" height="290" fill="#D2552E"/>' +
+    '<g transform="translate(262,228)"><circle class="nk-fire" r="34" fill="url(#nkFireG)"/></g>' +
+    '<g transform="translate(262,230)"><g class="nk-cloud">' +
+      '<path d="M-11 0 C-8 -40 -15 -72 -9 -98 L9 -98 C15 -72 8 -40 11 0 Z" fill="url(#nkStem)"/>' +
+      '<ellipse cx="0" cy="-62" rx="24" ry="6" fill="#8A3033"/>' +
+      '<ellipse cx="0" cy="-112" rx="50" ry="30" fill="#8A3033"/>' +
+      '<ellipse cx="-14" cy="-118" rx="30" ry="20" fill="#B4494D"/>' +
+      '<ellipse cx="16" cy="-114" rx="28" ry="18" fill="#B4494D"/>' +
+      '<ellipse cx="0" cy="-108" rx="28" ry="14" fill="#E0954A" opacity=".85"/>' +
+      '<ellipse cx="0" cy="-104" rx="14" ry="7" fill="#F2C35B" opacity=".9"/>' +
+    '</g></g>' +
+    '<path d="M0 232 Q90 214 180 226 T360 228 L360 290 L0 290 Z" fill="#1E1830"/>' +
+    '<g transform="translate(262,231)"><ellipse class="nk-shock" rx="6" ry="2" fill="none" stroke="#EDE4D0" stroke-width="1"/></g>' +
+    // skeleton (end state)
+    '<g transform="translate(110,120)"><g class="nk-bones" stroke="#EDE4D0" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+      '<circle cx="0" cy="11" r="11" fill="#EDE4D0" stroke="none"/>' +
+      '<rect x="-6" y="17" width="12" height="8" rx="2.5" fill="#EDE4D0" stroke="none"/>' +
+      '<circle cx="-4" cy="10" r="3.2" fill="#1E1830" stroke="none"/><circle cx="4" cy="10" r="3.2" fill="#1E1830" stroke="none"/>' +
+      '<path d="M-1.5 15 L0 13 L1.5 15" stroke="#1E1830" stroke-width="1.2"/>' +
+      '<line x1="0" y1="26" x2="0" y2="66" stroke-width="3"/>' +
+      '<path d="M-10 31 Q0 36 10 31 M-11 37 Q0 42 11 37 M-11 43 Q0 48 11 43 M-9 49 Q0 53 9 49" stroke-width="2.4"/>' +
+      '<line x1="-11" y1="28" x2="11" y2="28" stroke-width="3"/>' +
+      '<path d="M-10 64 Q0 74 10 64" stroke-width="3"/>' +
+      '<polyline points="-11,28 -19,46 -23,62" stroke-width="3"/>' +
+      '<g transform="translate(11,28)"><g class="nk-wave"><polyline points="0,0 8,18 12,34" stroke-width="3"/><circle cx="12" cy="36" r="2.5" fill="#EDE4D0" stroke="none"/></g></g>' +
+      '<polyline points="-5,68 -8,89 -9,110" stroke-width="3"/><polyline points="5,68 8,89 9,110" stroke-width="3"/>' +
+    '</g></g>' +
+    // person (flesh), blown away
+    '<g transform="translate(110,120)"><g class="nk-flesh"><g class="nk-idle">' +
+      '<line x1="-6" y1="66" x2="-9" y2="110" stroke="#2A2240" stroke-width="9" stroke-linecap="round"/>' +
+      '<line x1="6" y1="66" x2="9" y2="110" stroke="#2A2240" stroke-width="9" stroke-linecap="round"/>' +
+      '<line x1="-12" y1="31" x2="-23" y2="61" stroke="#5E7280" stroke-width="8" stroke-linecap="round"/>' +
+      '<line x1="12" y1="31" x2="23" y2="61" stroke="#5E7280" stroke-width="8" stroke-linecap="round"/>' +
+      '<rect x="-13" y="25" width="26" height="44" rx="8" fill="#5E7280"/>' +
+      '<circle cx="-23" cy="63" r="4" fill="#D9B38C"/><circle cx="23" cy="63" r="4" fill="#D9B38C"/>' +
+      '<circle cx="0" cy="12" r="12.5" fill="#D9B38C"/>' +
+      '<path d="M-12.5 9 Q-11 -2 0 -1 Q11 -2 12.5 9 Q6 3 0 4 Q-7 3 -12.5 9 Z" fill="#3A2A20"/>' +
+      '<circle cx="-4" cy="12" r="1.4" fill="#2A2240"/><circle cx="4" cy="12" r="1.4" fill="#2A2240"/>' +
+      '<path d="M-3.5 18 Q0 16.5 3.5 18" stroke="#2A2240" stroke-width="1.3" fill="none"/>' +
+    '</g></g></g>' +
+    '<g class="nk-ash">' + ash + '</g>' +
+    '<rect class="nk-flash" width="360" height="290" fill="url(#nkFlashG)"/>' +
+  '</svg>';
+}
+
+function startNuke(btn){
+  stopBreath(); stopPlayer(); Narrator.stop();
+  clearTimeout(nuke.timer);
+  if (btn){ btn.classList.add('pressed'); setTimeout(()=>btn.classList.remove('pressed'), 180); }
+  const ov = document.getElementById('nukeOverlay');
+  if (!ov.classList.contains('open')) nuke.lastFocus = document.activeElement;
+  nuke.cards = drawNukeCards();
+  nuke.idx = 0;
+  let c; do { c = Math.floor(Math.random()*NUKE_CAPTIONS.length); } while (NUKE_CAPTIONS.length > 1 && c === nuke.capIdx);
+  nuke.capIdx = c;
+  const [c1, c2] = NUKE_CAPTIONS[c];
+  const stage = document.getElementById('nukeStage');
+  stage.hidden = false;
+  stage.innerHTML = nukeScene() +
+    '<div class="nuke-cap" aria-live="polite"><span>' + esc(c1) + '</span><span>' + esc(c2) + '</span></div>' +
+    '<button class="btn small ghost" id="nkSkip" onclick="showNukeCards()">Skip to the cards</button>';
+  document.getElementById('nukeCards').hidden = true;
+  ov.classList.add('open');
+  ov.scrollTop = 0;
+  document.getElementById('nkSkip').focus();
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  nuke.timer = setTimeout(showNukeCards, reduce ? 2500 : 6800);
+}
+function showNukeCards(){
+  clearTimeout(nuke.timer);
+  if (!document.getElementById('nukeOverlay').classList.contains('open')) return;
+  document.getElementById('nukeStage').hidden = true;
+  document.getElementById('nukeStage').innerHTML = '';
+  document.getElementById('nukeCards').hidden = false;
+  renderNukeCard(0);
+  document.getElementById('nkNext').focus();
+}
+function renderNukeCard(dir){
+  Narrator.stop();
+  const total = nuke.cards.length + 1; // 3 cards + the fallout card
+  const el = document.getElementById('nukeCard');
+  el.classList.remove('back');
+  el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+  if (dir < 0) el.classList.add('back');
+  if (nuke.idx < nuke.cards.length){
+    const c = nuke.cards[nuke.idx];
+    el.innerHTML =
+      '<div class="ntag"><span>' + esc(c.icon) + ' ' + esc(c.tag) + '</span><span>' + (nuke.idx+1) + ' of ' + nuke.cards.length + '</span></div>' +
+      '<div class="nq">' + esc(c.q) + '</div>' +
+      '<div class="nb">' + esc(c.body) + '</div>' +
+      '<div class="ndo"><b>Try this</b>' + esc(c.do) + '</div>' +
+      '<div class="nsrc">' + esc(c.src) + '</div>';
+    document.getElementById('nkRead').style.display = '';
+  } else {
+    el.innerHTML =
+      '<div class="ntag"><span>☠ Fallout report</span><span>done</span></div>' +
+      '<div class="nq">You\'re still here. Skeleton and all.</div>' +
+      '<div class="nb">How\'s the number now, 0 to 10? If it dropped even 1 point, that\'s your nervous system taking the hint. If it didn\'t, push again or try the Panic Protocol. Waves end. This one will too.</div>' +
+      '<div class="row" style="margin-top:6px">' +
+        '<button class="btn small" onclick="logNuke()">Add to today\'s log</button>' +
+        '<button class="btn small ghost" onclick="closeNuke()">Done</button>' +
+      '</div>' +
+      '<div class="nsrc">In crisis? Call or text 988 (US) or your local emergency number.</div>';
+    document.getElementById('nkRead').style.display = 'none';
+  }
+  document.getElementById('nkPrev').disabled = nuke.idx === 0;
+  document.getElementById('nkNext').disabled = nuke.idx === total - 1;
+  document.getElementById('nkDots').innerHTML = Array.from({length: total}, (_,i)=>'<i' + (i===nuke.idx ? ' class="on"' : '') + '></i>').join('');
+}
+function nukeGo(d){
+  const total = nuke.cards.length + 1;
+  const n = Math.max(0, Math.min(total - 1, nuke.idx + d));
+  if (n === nuke.idx) return;
+  nuke.idx = n;
+  renderNukeCard(d);
+}
+function readNukeCard(){
+  const c = nuke.cards[nuke.idx];
+  if (c) Narrator.speak(c.q + ' ' + c.body + ' Try this. ' + c.do, null, {force:true});
+}
+function closeNuke(){
+  clearTimeout(nuke.timer);
+  Narrator.stop();
+  document.getElementById('nukeOverlay').classList.remove('open');
+  document.getElementById('nukeStage').innerHTML = '';
+  if (nuke.lastFocus && nuke.lastFocus.focus) nuke.lastFocus.focus();
+}
+function logNuke(){
+  closeNuke();
+  go('p-track');
+  setTrackView('daily');
+  if (document.getElementById('fDate').value !== todayStr()) loadDay(todayStr());
+  if (!selSkills.has('Nuclear option')){ selSkills.add('Nuclear option'); renderFormChips(); }
+  toast('Nuclear option added to today. Save when ready.');
+}
+(function(){
+  // swipe between cards
+  let x0 = null, y0 = 0;
+  const card = document.getElementById('nukeCard');
+  card.addEventListener('pointerdown', e=>{ x0 = e.clientX; y0 = e.clientY; });
+  card.addEventListener('pointerup', e=>{
+    if (x0 === null) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0;
+    x0 = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) nukeGo(dx < 0 ? 1 : -1);
+  });
+  card.addEventListener('pointercancel', ()=>{ x0 = null; });
+})();
 
 /* ================= QUOTES ================= */
 const QUOTES = {
